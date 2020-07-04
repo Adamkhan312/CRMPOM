@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite guice-stage="DEVELOPMENT" verbose="3" name="Failed suite [Free Crm App Automation Test Suite]" parallel="tests">
+  <listeners>
+    <listener class-name="com.freecrm.Reporting.CustomListeners"/>
+  </listeners>
+  <test thread-count="5" verbose="3" name="Chrome Tests(failed)" parallel="tests">
+    <parameter name="browser" value="chrome"/>
+    <classes>
+      <class name="com.freecrm.TestCases.DashboardPageTests">
+        <methods>
+          <include name="tearDown"/>
+          <include name="verifyEachSideBarLinkTest"/>
+          <include name="setUp"/>
+        </methods>
+      </class> <!-- com.freecrm.TestCases.DashboardPageTests -->
+    </classes>
+  </test> <!-- Chrome Tests(failed) -->
+</suite> <!-- Failed suite [Free Crm App Automation Test Suite] -->

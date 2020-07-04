@@ -8,6 +8,7 @@ import com.aventstack.extentreports.markuputils.ExtentColor;
 import com.aventstack.extentreports.markuputils.Markup;
 import com.aventstack.extentreports.markuputils.MarkupHelper;
 
+import com.freecrm.TestBase.BaseTest;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
@@ -17,13 +18,12 @@ import org.testng.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.Date;
 
 
-public class CustomListeners  implements ITestListener, ISuiteListener {
+public class CustomListeners extends BaseTest implements ITestListener, ISuiteListener {
 
-    WebDriver driver;
+
     public static ExtentReports extent = ExtentManager.createInstance();
     public static ThreadLocal<ExtentTest> extentTest = new ThreadLocal<ExtentTest>();
 
@@ -52,11 +52,13 @@ public class CustomListeners  implements ITestListener, ISuiteListener {
                     "Exception Occured, click to see details:"+"</font></b></summary>"+
                     exceptionMessage.replaceAll(",","<br>")+"</details> \n");
 
-            //WebDriver driver=((com.freecrm.Base.BasePage)result.getInstance();
+           // WebDriver driver=((BaseTest.getDriver()))result.getInstance();
             String path = takeScreenshot(driver,result.getMethod().getMethodName());
+
             try{
+
                 extentTest.get().fail("<b><font color=red>" + "Screenshot of failure"+ "</font></b>",
-                        MediaEntityBuilder.createScreenCaptureFromPath(path,"Image").build());
+                       MediaEntityBuilder.createScreenCaptureFromPath(path,"Image").build());
                 extentTest.get().addScreenCaptureFromPath(path);
             } catch (IOException e) {
                 extentTest.get().fail("Test Failed, cannot attach screenshot");
@@ -95,29 +97,30 @@ public class CustomListeners  implements ITestListener, ISuiteListener {
             extent.flush();
         }
 
-        public String takeScreenshot(WebDriver driver, String methodName){
-            String fileName= getScreenshotName(methodName);
-            String directory = System.getProperty("user.dir")+ "/screenshots/";
-            new File(directory).mkdirs();
-            String path = directory+fileName;
+    public String takeScreenshot(WebDriver driver,String methodName){
+        String fileName= getScreenshotName(methodName);
+        String directory = System.getProperty("user.dir")+ "/screenshots/";
+        new File(directory).mkdirs();
+        String path = directory+fileName;
 
-            try{
-                File screenshot =((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
-                FileUtils.copyFile(screenshot,new File(path));
-                System.out.println("*****************");
-                System.out.println("Screenshot stored at:" + path);
-                System.out.println("******************");
-            }catch (Exception e){
-                e.printStackTrace();
-            }
-            return path;
+        try{
+            File screenshot =((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
+            FileUtils.copyFile(screenshot,new File(path));
+            System.out.println("*****************");
+            System.out.println("Screenshot stored at:" + path);
+            System.out.println("******************");
+        }catch (Exception e){
+            e.printStackTrace();
         }
+        return path;
+    }
 
-        public static String getScreenshotName(String methodName){
-            Date d = new Date();
-            String fileName = methodName + "_" + d.toString().replace(":","_").replace(" ","_")+".png";
-            return fileName;
-        }
+    public static String getScreenshotName(String methodName){
+        Date d = new Date();
+        String fileName = methodName + "_" + d.toString().replace(":","_").replace(" ","_")+".png";
+        return fileName;
+    }
+
 
 
         @Override

@@ -80,8 +80,8 @@ public class BaseTest {
         ExtentManager.createInstance().flush();
     }
 
-    public WebDriver getDriver() {
-        return driver;
+    public  WebDriver getDriver() {
+        return this.driver;
 
     }
 

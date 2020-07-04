@@ -1,0 +1,55 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+<title>TestNG Report</title>
+<style type="text/css">table {margin-bottom:10px;border-collapse:collapse;empty-cells:show}th,td {border:1px solid #009;padding:.25em .5em}th {vertical-align:bottom}td {vertical-align:top}table a {font-weight:bold}.stripe td {background-color: #E6EBF9}.num {text-align:right}.passedodd td {background-color: #3F3}.passedeven td {background-color: #0A0}.skippedodd td {background-color: #DDD}.skippedeven td {background-color: #CCC}.failedodd td,.attn {background-color: #F33}.failedeven td,.stripe .attn {background-color: #D00}.stacktrace {white-space:pre;font-family:monospace}.totop {font-size:85%;text-align:center;border-bottom:2px solid #000}.invisible {display:none}</style>
+</head>
+<body>
+<table>
+<tr><th>Test</th><th># Passed</th><th># Skipped</th><th># Failed</th><th>Time (ms)</th><th>Included Groups</th><th>Excluded Groups</th></tr>
+<tr><th colspan="7">Free Crm App Automation Test Suite</th></tr>
+<tr><td><a href="#t0">Chrome Tests</a></td><td class="num">7</td><td class="num attn">1</td><td class="num">0</td><td class="num">26,670</td><td></td><td></td></tr>
+</table>
+<table id='summary'><thead><tr><th>Class</th><th>Method</th><th>Start</th><th>Time (ms)</th></tr></thead><tbody><tr><th colspan="4">Free Crm App Automation Test Suite</th></tr></tbody><tbody id="t0"><tr><th colspan="4">Chrome Tests &#8212; skipped</th></tr><tr class="skippedeven"><td rowspan="1">com.freecrm.TestCases.DashboardPageTests</td><td><a href="#m0">verifyEachSideBarLinkTest</a></td><td rowspan="1">1593802610603</td><td rowspan="1">0</td></tr><tr><th colspan="4">Chrome Tests &#8212; passed</th></tr><tr class="passedeven"><td rowspan="4">com.freecrm.TestCases.DashboardPageTests</td><td><a href="#m1">searchFunctionalityTest</a></td><td rowspan="1">1593802601050</td><td rowspan="1">1</td></tr><tr class="passedeven"><td><a href="#m2">verifyDashboardCardsTest</a></td><td rowspan="1">1593802604110</td><td rowspan="1">0</td></tr><tr class="passedeven"><td><a href="#m3">verifyFreeAccountLinkTest</a></td><td rowspan="1">1593802607405</td><td rowspan="1">0</td></tr><tr class="passedeven"><td><a href="#m4">verifyUserNameTest</a></td><td rowspan="1">1593802610505</td><td rowspan="1">0</td></tr><tr class="passedodd"><td rowspan="3">com.freecrm.TestCases.LoginPageTests</td><td><a href="#m5">LoginTest</a></td><td rowspan="1">1593802587815</td><td rowspan="1">1230</td></tr><tr class="passedodd"><td><a href="#m6">forgotPasswordTest</a></td><td rowspan="1">1593802592001</td><td rowspan="1">1321</td></tr><tr class="passedodd"><td><a href="#m7">invalidLoginTest</a></td><td rowspan="1">1593802596958</td><td rowspan="1">1125</td></tr></tbody>
+</table>
+<h2>Chrome Tests</h2><h3 id="m0">com.freecrm.TestCases.DashboardPageTests#verifyEachSideBarLinkTest</h3><table class="result"><tr><th>Exception</th></tr><tr><td><div class="stacktrace">java.lang.RuntimeException: java.lang.NullPointerException
+	at org.testng.internal.MethodInvocationHelper.invokeMethodNoCheckedException(MethodInvocationHelper.java:49)
+	at org.testng.internal.MethodInvocationHelper.invokeDataProvider(MethodInvocationHelper.java:131)
+	at org.testng.internal.Parameters.handleParameters(Parameters.java:706)
+	at org.testng.internal.ParameterHandler.handleParameters(ParameterHandler.java:49)
+	at org.testng.internal.ParameterHandler.createParameters(ParameterHandler.java:37)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:924)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:109)
+	at org.testng.TestRunner.privateRun(TestRunner.java:648)
+	at org.testng.TestRunner.run(TestRunner.java:505)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:455)
+	at org.testng.SuiteRunner.access$000(SuiteRunner.java:40)
+	at org.testng.SuiteRunner$SuiteWorker.run(SuiteRunner.java:489)
+	at org.testng.internal.thread.ThreadUtil$1.call(ThreadUtil.java:52)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+Caused by: java.lang.NullPointerException
+	at com.freecrm.Utilities.Xls_Reader.getRowCount(Xls_Reader.java:37)
+	at com.freecrm.Utilities.DataProviders.getData(DataProviders.java:22)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:124)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:74)
+	at org.testng.internal.MethodInvocationHelper.invokeMethodNoCheckedException(MethodInvocationHelper.java:45)
+	... 17 more
+</div></td></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
+<h3 id="m1">com.freecrm.TestCases.DashboardPageTests#searchFunctionalityTest</h3><table class="result"><tr><th class="invisible"/></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
+<h3 id="m2">com.freecrm.TestCases.DashboardPageTests#verifyDashboardCardsTest</h3><table class="result"><tr><th class="invisible"/></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
+<h3 id="m3">com.freecrm.TestCases.DashboardPageTests#verifyFreeAccountLinkTest</h3><table class="result"><tr><th class="invisible"/></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
+<h3 id="m4">com.freecrm.TestCases.DashboardPageTests#verifyUserNameTest</h3><table class="result"><tr><th class="invisible"/></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
+<h3 id="m5">com.freecrm.TestCases.LoginPageTests#LoginTest</h3><table class="result"><tr><th class="invisible"/></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
+<h3 id="m6">com.freecrm.TestCases.LoginPageTests#forgotPasswordTest</h3><table class="result"><tr><th class="invisible"/></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
+<h3 id="m7">com.freecrm.TestCases.LoginPageTests#invalidLoginTest</h3><table class="result"><tr><th class="invisible"/></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
+</body>
+</html>

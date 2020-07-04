@@ -5,6 +5,7 @@ import com.freecrm.Pages.DashboardPage;
 import com.freecrm.TestBase.BaseTest;
 import com.sun.xml.internal.bind.v2.TODO;
 import org.testng.Assert;
+import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 import java.util.Hashtable;
@@ -20,30 +21,31 @@ public class CalendarPageTests extends BaseTest {
         Assert.assertTrue(calendarPage.checkMonthYearText());
     }
 
-    @Test//TODO:Implement loop functionality of calendar to validate correct date is highlighted
+    @Test(enabled= false)//TODO:Implement loop functionality of calendar to validate correct date is highlighted
     public void verifySystemDateHighlighted(){
-
 
 
     }
 
     @Test
     public void clickWeekTest(){
-        //TODO FIX CALENDAR METHODS
-        //Login and click on Calender
-
-        //Click on Week button
-
-        //VerifyWeekCalender is displayed by checking if the Week range is displayed and correct
+        CalendarPage calendarPage = new CalendarPage(driver);
+        //login functionality is embodied into this function
+        calendarPage.navigateToCalendarPage();
+        //click On Week button
+        calendarPage.clickOnWeek();
+        //Check that the displayed week range is equal to expected week Range
+        Assert.assertEquals(calendarPage.weekRangeTextDisplayed(),calendarPage.getCurrentWeekRange());
+        //Assert.assertTrue(calendarPage.checkIfWeekViewDateRangeisCorrect());
 
     }
 
-    @Test
+    @Test(enabled = false)
     public void clickDayTest(){
     }
 
 
-    @Test
+    @Test(enabled = false)
     public void clickMonthTest(){
         //navigate to week
 
@@ -52,7 +54,7 @@ public class CalendarPageTests extends BaseTest {
     }
 
 
-    @Test
+    @Test(enabled = false)
     public void verifyNavigatingThroughWeeksTest(){
         //login click on calendar
         //click on week
@@ -68,7 +70,7 @@ public class CalendarPageTests extends BaseTest {
     }
 
 
-    @Test//(dataProvider = "dp", dataProviderClass = Utilities.DataProviders.class)
+    @Test(enabled = false)//(dataProvider = "dp", dataProviderClass = Utilities.DataProviders.class)
     public void CreateNewEventTests(Hashtable<String,String> data) throws InterruptedException {
 
 
@@ -77,7 +79,7 @@ public class CalendarPageTests extends BaseTest {
 
 
 
-    @Test
+    @Test(enabled = false)
     public void CreateEventAndVerifyDisplayedInAgendaTest(){
 
     }
