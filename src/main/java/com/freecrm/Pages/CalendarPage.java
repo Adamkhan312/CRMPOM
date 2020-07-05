@@ -15,7 +15,7 @@ import java.time.LocalDate;
 import java.time.Month;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
-import java.util.Calendar;
+import java.util.*;
 
 public class CalendarPage extends BasePage {
 
@@ -44,6 +44,8 @@ public class CalendarPage extends BasePage {
     private By weekButton = By.xpath("//span[contains(text(),'Week')]");//XPATH
     private By newAgendaButton = By.cssSelector("button.ui.linkedin.button");//CSS
     private By dayButton = By.xpath("//span[contains(text(),'Day')]");
+    private By previousButton = By.xpath(" //i[@class='chevron left icon']");
+    private By nextButton = By.xpath("//i[@class='chevron right icon']");
     private By createNewEventText = By.xpath("//div[@class='ui loader']");//XPATH
 
 
@@ -62,7 +64,26 @@ public class CalendarPage extends BasePage {
         loginPage.doLogin(Constants.email, Constants.password);
         loginPage.clickOnCalendarMenu();
     }
+    public void clickOnWeek() {
+        clickOnElement(weekButton);
 
+    }
+    public void clickOnPreviousButton(){
+        clickOnElement(previousButton);
+    }
+
+    public void clickOnNextButton(){
+        clickOnElement(nextButton);
+    }
+
+    public void clickOnNewAgendaButton() {
+        clickOnElement(newAgendaButton);
+    }
+
+    public void clickOnDay() {
+        clickOnElement(dayButton);
+
+    }
     public boolean checkMonthYearText() {
         waitForElementPresent(weeklyViewTextDisplayDateRange);
         String MonthYearTextValueDisplayed = getDriver().findElement(monthYearTextDisplayed).getText();
@@ -82,57 +103,80 @@ public class CalendarPage extends BasePage {
         }
     }
 
-    public String getDayFromDate(String date){
+
+    public  String getDayFromDate(String date) {
         String fullDate = date;
         String[] tempDate = fullDate.split("/");
         return tempDate[1].toString();
     }
 
-
-    public String getMondayOfCurrentWeek(){
-        String BeginningOfWeekDate;
-        // Get calendar set to current date and time
+    public  String getMonthFromDate(String date) {
+        String fullDate = date;
+        String[] tempDate = fullDate.split("/");
+        return tempDate[0];
+    }
+    public  Calendar getCustomSundayDateCalendar(int weekDifference) {
+        LocalDate currentdate = LocalDate.now();
+        Month currentMonth = currentdate.getMonth();
         Calendar c = Calendar.getInstance();
-        // Set the calendar week to start monday of the current week
-        c.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
-        //Format date
-        Format df = new SimpleDateFormat("MM/dd/yyyy");
-        return  df.format(c.getTime());//current date is monday of the week
-
+        c.add(Calendar.WEEK_OF_YEAR, weekDifference);
+        c.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
+        return c;
     }
 
-    public String getSundayOfCurrentWeek(){
-        Calendar c = Calendar.getInstance();
-        // Set the calendar week to start monday of the current week
-        c.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
-        //Format date
-        Format df = new SimpleDateFormat("MM/dd/yyyy");
-        //get the last day of the week
+    public  Date getDateCustomSunday(Calendar c) {
+        return c.getTime();
+    }
+
+    public  Date getCustomSaturdayDate(int weekDifference) {
+        Calendar c = getCustomSundayDateCalendar(weekDifference);
         for (int i = 1; i <= 6; i++) {
             c.add(Calendar.DATE, 1);
         }
-       return df.format(c.getTime());
-
+        return c.getTime();
     }
 
-//    public date getCustomDate(int numberOfClick , Date getsystem date ){
-//        //-
-//        //+
-//    }
-//
-//    click previousWeek(){
-//
-//    }
-//
-//    click necx=
-//
-//    public String getCurrentWeekRange(Custom System Date) {
-//
-//
-//    }
+    public static Map MonthHashMap() {
+        Map<String, String> monthHash = new HashMap<String, String>(12);
+        monthHash.put("01", "January");
+        monthHash.put("02","February");
+        monthHash.put("03","March");
+        monthHash.put("04","April");
+        monthHash.put("05","May");
+        monthHash.put("06","June");
+        monthHash.put("07","July");
+        monthHash.put("08","August");
+        monthHash.put("09","September");
+        monthHash.put("10","October");
+        monthHash.put("11","November");
+        monthHash.put("12","December");
+        return monthHash;
+    }
+
+    public  String customExpectedDateRange(int weekDifference) {
+        Map monthHash = MonthHashMap();
+        Format df = new SimpleDateFormat("MM/dd/yyyy");
+        String sundayDate = df.format(getDateCustomSunday(getCustomSundayDateCalendar(weekDifference)));
+        String saturdayDate = df.format(getCustomSaturdayDate(weekDifference));
+        if (Integer.parseInt(getDayFromDate(sundayDate)) > 27) {
+            String firstDate = monthHash.get(getMonthFromDate(sundayDate)).toString() + " " + getDayFromDate(sundayDate);
+            String secondDate = monthHash.get(getMonthFromDate(saturdayDate)).toString() + " " + getDayFromDate(saturdayDate);
+            String finalDateRange = firstDate + " – " + secondDate;
+            System.out.println("Expected Week Range is " + finalDateRange);
+            return finalDateRange;
+        } else {
+            String firstDate = monthHash.get(getMonthFromDate(sundayDate)).toString() + " " + getDayFromDate(sundayDate);
+            String secondDate = getDayFromDate(saturdayDate);
+            String finalDateRange = firstDate + " – " + secondDate;
+            System.out.println("Expected Week Range is "+ finalDateRange);
+            return finalDateRange;
+        }
+    }
+
 
 
     public String getWeekRange() {
+        Locale locale = new Locale("en", "GB");
         String BeginningOfWeekDate;
         String EndOfWeekDate;
         String lastMonth;
@@ -144,7 +188,7 @@ public class CalendarPage extends BasePage {
         // Get calendar set to current date and time
         Calendar c = Calendar.getInstance();
         // Set the calendar week to start monday of the current week
-        c.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+        c.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
         //Format date
         Format df = new SimpleDateFormat("MM/dd/yyyy");
         BeginningOfWeekDate = df.format(c.getTime());//current date is monday of the week
@@ -187,23 +231,11 @@ public class CalendarPage extends BasePage {
         }
     }
 
-    public void clickOnWeek() {
-        clickOnElement(weekButton);
 
-
-    }
-
-    public void clickOnNewAgendaButton() {
-        clickOnElement(newAgendaButton);
-    }
-
-    public void clickOnDay() {
-        clickOnElement(dayButton);
-
-    }
 
     public String weekRangeTextDisplayed() {
         String Actual = driver.findElement(weeklyViewTextDisplayDateRange).getText().trim();
+        System.out.println("Displayed week range is : "+ Actual);
         return Actual;
     }
 

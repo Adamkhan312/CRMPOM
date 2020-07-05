@@ -27,7 +27,7 @@ public class CalendarPageTests extends BaseTest {
 
     }
 
-    @Test (groups = "debug")
+    @Test
     public void clickWeekTest(){
         CalendarPage calendarPage = new CalendarPage(driver);
         //login functionality is embodied into this function
@@ -35,13 +35,17 @@ public class CalendarPageTests extends BaseTest {
         //click On Week button
         calendarPage.clickOnWeek();
         //Check that the displayed week range is equal to expected week Range
-        Assert.assertEquals(calendarPage.weekRangeTextDisplayed(),calendarPage.getWeekRange());
+        Assert.assertEquals(calendarPage.weekRangeTextDisplayed(),calendarPage.customExpectedDateRange(0));
         //Assert.assertTrue(calendarPage.checkIfWeekViewDateRangeisCorrect());
 
     }
 
     @Test(enabled = false)
-    public void clickDayTest(){
+    public void verifyTodayButtonWhenInWeekViewTest(){
+    }
+
+    @Test(enabled = false)
+    public void verifyTodayButtonWhenInDayViewTest(){
     }
 
 
@@ -54,17 +58,29 @@ public class CalendarPageTests extends BaseTest {
     }
 
 
-    @Test(enabled = false)
+    @Test
     public void verifyNavigatingThroughWeeksTest(){
-        //login click on calendar
-        //click on week
-        //get expected week range
-        //click a week ahead
-        //validate week range
-        //click previous week(bringing us back to current)
-        //validate current week range
-        //click previous week again
-        //validate week range
+        CalendarPage calendarPage = new CalendarPage(driver);
+        //login functionality is embodied into this function
+        calendarPage.navigateToCalendarPage();
+        //click On Week button
+        calendarPage.clickOnWeek();
+        Assert.assertEquals(calendarPage.weekRangeTextDisplayed(),calendarPage.customExpectedDateRange(0));
+        calendarPage.clickOnPreviousButton();
+        //Navigating through the weeks and verifying that the Week Range is correct
+        Assert.assertEquals(calendarPage.weekRangeTextDisplayed(),calendarPage.customExpectedDateRange(-1));
+        calendarPage.clickOnPreviousButton();
+        Assert.assertEquals(calendarPage.weekRangeTextDisplayed(),calendarPage.customExpectedDateRange(-2));
+        calendarPage.clickOnNextButton();
+        Assert.assertEquals(calendarPage.weekRangeTextDisplayed(),calendarPage.customExpectedDateRange(-1));
+        calendarPage.clickOnNextButton();
+        Assert.assertEquals(calendarPage.weekRangeTextDisplayed(),calendarPage.customExpectedDateRange(0));
+        calendarPage.clickOnNextButton();
+        Assert.assertEquals(calendarPage.weekRangeTextDisplayed(),calendarPage.customExpectedDateRange(1));
+
+
+
+
 
 
     }

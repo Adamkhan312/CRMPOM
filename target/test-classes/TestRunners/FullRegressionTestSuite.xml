@@ -8,14 +8,14 @@
 
     <test name="Chrome Tests" parallel="tests" thread-count="1" >
         <parameter name="browser" value="chrome"></parameter>
-        <groups>
-            <run>
-                <include name="debug"/>
-            </run>
-        </groups>
+<!--        <groups>-->
+<!--            <run>-->
+<!--                <include name="debug"/>-->
+<!--            </run>-->
+<!--        </groups>-->
         <classes>
-<!--            <class name="com.freecrm.TestCases.LoginPageTests"></class>-->
-<!--            <class name="com.freecrm.TestCases.DashboardPageTests"></class>-->
+            <class name="com.freecrm.TestCases.LoginPageTests"></class>
+            <class name="com.freecrm.TestCases.DashboardPageTests"></class>
             <class name="com.freecrm.TestCases.CalendarPageTests"></class>
         </classes>
     </test>
