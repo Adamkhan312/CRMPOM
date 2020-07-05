@@ -38,18 +38,20 @@ public class CalendarPage extends BasePage {
     private By calendarLink = By.xpath("//span[contains(text(),'Calendar')]");
     private By CalendarTableXPath = By.xpath("//div[@class='rbc-month-view']");
 
-    private By WeeklyViewTextDisplayDateRange = By.xpath("//span[@class='rbc-toolbar-label']");
-    public By MonthYearTextDisplayed = By.cssSelector("span.rbc-toolbar-label");//CSS
-    public By CurrentDateHighlightedOnCalendar = By.cssSelector("div.rbc-day-bg.rbc-today");//CSS
-    public By WeekButton = By.xpath("//span[contains(text(),'Week')]");//XPATH
-    public By NewAgendaButton = By.cssSelector("button.ui.linkedin.button");//CSS
-    public By CreateNewEventText = By.xpath("//div[@class='ui loader']");//XPATH
+    private By weeklyViewTextDisplayDateRange = By.xpath("//span[@class='rbc-toolbar-label']");
+    private By monthYearTextDisplayed = By.cssSelector("span.rbc-toolbar-label");//CSS
+    private By currentDateHighlightedOnCalendar = By.cssSelector("div.rbc-day-bg.rbc-today");//CSS
+    private By weekButton = By.xpath("//span[contains(text(),'Week')]");//XPATH
+    private By newAgendaButton = By.cssSelector("button.ui.linkedin.button");//CSS
+    private By dayButton = By.xpath("//span[contains(text(),'Day')]");
+    private By createNewEventText = By.xpath("//div[@class='ui loader']");//XPATH
+
 
 
     //---------------------------------------------------Getters for By-------------------------------------------------//
 
     public By getWeeklyViewTextDisplayDateRange() {
-        return WeeklyViewTextDisplayDateRange;
+        return weeklyViewTextDisplayDateRange;
     }
 
 
@@ -62,8 +64,8 @@ public class CalendarPage extends BasePage {
     }
 
     public boolean checkMonthYearText() {
-        waitForElementPresent(WeeklyViewTextDisplayDateRange);
-        String MonthYearTextValueDisplayed = getDriver().findElement(MonthYearTextDisplayed).getText();
+        waitForElementPresent(weeklyViewTextDisplayDateRange);
+        String MonthYearTextValueDisplayed = getDriver().findElement(monthYearTextDisplayed).getText();
         //Getting the current month
         Month currentMonth = currentdate.getMonth();
         //getting the current year
@@ -80,7 +82,57 @@ public class CalendarPage extends BasePage {
         }
     }
 
-    public String getCurrentWeekRange() {
+    public String getDayFromDate(String date){
+        String fullDate = date;
+        String[] tempDate = fullDate.split("/");
+        return tempDate[1].toString();
+    }
+
+
+    public String getMondayOfCurrentWeek(){
+        String BeginningOfWeekDate;
+        // Get calendar set to current date and time
+        Calendar c = Calendar.getInstance();
+        // Set the calendar week to start monday of the current week
+        c.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+        //Format date
+        Format df = new SimpleDateFormat("MM/dd/yyyy");
+        return  df.format(c.getTime());//current date is monday of the week
+
+    }
+
+    public String getSundayOfCurrentWeek(){
+        Calendar c = Calendar.getInstance();
+        // Set the calendar week to start monday of the current week
+        c.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+        //Format date
+        Format df = new SimpleDateFormat("MM/dd/yyyy");
+        //get the last day of the week
+        for (int i = 1; i <= 6; i++) {
+            c.add(Calendar.DATE, 1);
+        }
+       return df.format(c.getTime());
+
+    }
+
+//    public date getCustomDate(int numberOfClick , Date getsystem date ){
+//        //-
+//        //+
+//    }
+//
+//    click previousWeek(){
+//
+//    }
+//
+//    click necx=
+//
+//    public String getCurrentWeekRange(Custom System Date) {
+//
+//
+//    }
+
+
+    public String getWeekRange() {
         String BeginningOfWeekDate;
         String EndOfWeekDate;
         String lastMonth;
@@ -121,11 +173,11 @@ public class CalendarPage extends BasePage {
     }
 
     public boolean checkIfWeekViewDateRangeisCorrect() {
-        String Actual = driver.findElement(WeeklyViewTextDisplayDateRange).getText().trim();
+        String Actual = driver.findElement(weeklyViewTextDisplayDateRange).getText().trim();
         System.out.println("Displayed text is : " + Actual);
         // Actual.replace("–","-");
-        System.out.println("Expected text is  : " + getCurrentWeekRange());
-        String Expected = getCurrentWeekRange();
+        System.out.println("Expected text is  : " + getWeekRange());
+        String Expected = getWeekRange();
         if (Expected.equalsIgnoreCase(Actual)) {
             System.out.println(" Expected and Actual is correct");
             return true;
@@ -136,21 +188,22 @@ public class CalendarPage extends BasePage {
     }
 
     public void clickOnWeek() {
-        clickOnElement(WeekButton);
+        clickOnElement(weekButton);
 
 
     }
 
     public void clickOnNewAgendaButton() {
-
+        clickOnElement(newAgendaButton);
     }
 
     public void clickOnDay() {
+        clickOnElement(dayButton);
 
     }
 
     public String weekRangeTextDisplayed() {
-        String Actual = driver.findElement(WeeklyViewTextDisplayDateRange).getText().trim();
+        String Actual = driver.findElement(weeklyViewTextDisplayDateRange).getText().trim();
         return Actual;
     }
 

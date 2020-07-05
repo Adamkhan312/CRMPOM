@@ -27,7 +27,7 @@ public class CalendarPageTests extends BaseTest {
 
     }
 
-    @Test
+    @Test (groups = "debug")
     public void clickWeekTest(){
         CalendarPage calendarPage = new CalendarPage(driver);
         //login functionality is embodied into this function
@@ -35,7 +35,7 @@ public class CalendarPageTests extends BaseTest {
         //click On Week button
         calendarPage.clickOnWeek();
         //Check that the displayed week range is equal to expected week Range
-        Assert.assertEquals(calendarPage.weekRangeTextDisplayed(),calendarPage.getCurrentWeekRange());
+        Assert.assertEquals(calendarPage.weekRangeTextDisplayed(),calendarPage.getWeekRange());
         //Assert.assertTrue(calendarPage.checkIfWeekViewDateRangeisCorrect());
 
     }

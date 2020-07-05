@@ -6,7 +6,12 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.File;
+import java.text.Format;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.Month;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -111,6 +116,17 @@ public class BasePage {
             linkList.add(list.get(i).getText());
         }
         return linkList;
+    }
+
+
+    public static String getSystemDate(){
+        LocalDate currentdate = LocalDate.now();
+        Month currentMonth = currentdate.getMonth();
+        Calendar c = Calendar.getInstance();
+        Format df = new SimpleDateFormat("MM/dd/yyyy");
+        String date = df.format(c.getTime());
+        return date;
+
     }
 
 
