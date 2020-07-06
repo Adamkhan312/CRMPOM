@@ -2,6 +2,8 @@ package com.freecrm.Base;
 
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.*;
+import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -14,6 +16,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.function.Predicate;
+
+import static org.openqa.selenium.support.PageFactory.initElements;
 
 public class BasePage {
 
@@ -21,54 +26,75 @@ public class BasePage {
     private static final int POLLING = 100;
 
     protected WebDriver driver;
-    private WebDriverWait wait;
+    protected WebDriverWait wait;
 
 
     //constructor
     public BasePage(WebDriver driver) {
         this.driver = driver;
         wait = new WebDriverWait(driver, TIMEOUT, POLLING);
-      // initElements(driver,this);
+        PageFactory.initElements(new AjaxElementLocatorFactory(driver, TIMEOUT), this);
     }
 
 
     //---------------------------------Common Functions using By Locator for each page--------------------------------------------------/
 
-    public  WebDriver getDriver(){
+    public WebDriver getDriver() {
         return this.driver;
     }
 
+    public void switchToiframe(int index) {
+        driver.switchTo().frame(index);
+    }
+    public void allFrames(){
+    List<WebElement> frames = driver.findElements(By.tagName("iframe"));
 
+    System.out.println(frames.size());
+
+    for(WebElement fr: frames){
+        System.out.println(fr.getAttribute("id"));
+    }
+}
     public String getPageTitle() {
-       return driver.getTitle();
+        return driver.getTitle();
     }
 
     public String getPageHeader(By locator) {
-    return getElement(locator).getText();
+        return getElement(locator).getText();
     }
 
-    public void clickOnElement(By locator){
+    public void getUrlAndGo() {
+        String url = driver.getCurrentUrl();
+        driver.get(url);
+    }
+
+    public void clickOnElement(By locator) {
         driver.findElement(locator).click();
 
 
     }
+
+    public void enterTextInField(By locator, String text) {
+        driver.findElement(locator).sendKeys(text);
+    }
+
     public WebElement getElement(By locator) {
         WebElement element = null;
         try {
-          element =  driver.findElement(locator);
-          return element;
-        }catch (Exception e){
-            System.out.println("could not locate the element using getElement() with "+ locator.toString());
+            element = driver.findElement(locator);
+            return element;
+        } catch (Exception e) {
+            System.out.println("could not locate the element using getElement() with " + locator.toString());
             e.printStackTrace();
         }
         return element;//will return null if not able to getELement
     }
 
-    public boolean isElementPresent(By locator){
-        try{
+    public boolean isElementPresent(By locator) {
+        try {
             wait.until(ExpectedConditions.presenceOfElementLocated(locator));
             return true;
-        }catch(Exception e){
+        } catch (Exception e) {
             System.out.println("Element not present");
             e.printStackTrace();
             return false;
@@ -76,11 +102,10 @@ public class BasePage {
     }
 
 
-
-    public String getTextOfElement(By locator){
-        try{
+    public String getTextOfElement(By locator) {
+        try {
             return driver.findElement(locator).getText();
-        }catch(ElementNotVisibleException e){
+        } catch (ElementNotVisibleException e) {
             System.out.println("Couldnt find Element while using getTextOfElement()");
             e.printStackTrace();
             return null;
@@ -90,19 +115,19 @@ public class BasePage {
 
     public void waitForElementPresent(By locator) {
 
-        try{
+        try {
             wait.until(ExpectedConditions.presenceOfElementLocated(locator));
-        }catch(Exception e){
-            System.out.println("Exception occured while waiting for the element "+ locator.toString());
+        } catch (Exception e) {
+            System.out.println("Exception occured while waiting for the element " + locator.toString());
             e.printStackTrace();
         }
     }
 
     public void waitForPageTitle(String title) {
-        try{
+        try {
             wait.until(ExpectedConditions.titleContains(title));
-        }catch(Exception e){
-            System.out.println("Exception occurred while waiting for the title of "+ title);
+        } catch (Exception e) {
+            System.out.println("Exception occurred while waiting for the title of " + title);
             e.printStackTrace();
         }
     }
@@ -110,7 +135,7 @@ public class BasePage {
 
     public ArrayList<String> getlist(By locator) {
         List<WebElement> list = getDriver().findElements(locator);
-        ArrayList<String> linkList = new ArrayList<String>(){
+        ArrayList<String> linkList = new ArrayList<String>() {
         };
         for (int i = 0; i <= list.size() - 1; i++) {
             linkList.add(list.get(i).getText());
@@ -119,7 +144,7 @@ public class BasePage {
     }
 
 
-    public static String getSystemDate(){
+    public static String getSystemDate() {
         LocalDate currentdate = LocalDate.now();
         Month currentMonth = currentdate.getMonth();
         Calendar c = Calendar.getInstance();
@@ -130,8 +155,6 @@ public class BasePage {
     }
 
 
-
-
-    }
+}
 
 

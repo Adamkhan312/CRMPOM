@@ -14,8 +14,8 @@
 <!--            </run>-->
 <!--        </groups>-->
         <classes>
-            <class name="com.freecrm.TestCases.LoginPageTests"></class>
-            <class name="com.freecrm.TestCases.DashboardPageTests"></class>
+<!--            <class name="com.freecrm.TestCases.LoginPageTests"></class>-->
+<!--            <class name="com.freecrm.TestCases.DashboardPageTests"></class>-->
             <class name="com.freecrm.TestCases.CalendarPageTests"></class>
         </classes>
     </test>
