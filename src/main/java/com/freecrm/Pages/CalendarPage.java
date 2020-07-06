@@ -26,7 +26,6 @@ public class CalendarPage extends BasePage {
     private String CurrentMonthYear;
     String emailValue = Constants.email;
 
-
     //---------------------------------------------------Constructor----------------------------------------------------//
     public CalendarPage(WebDriver driver) {
         super(driver);
@@ -48,6 +47,7 @@ public class CalendarPage extends BasePage {
     private By previousButton = By.xpath(" //i[@class='chevron left icon']");
     private By nextButton = By.xpath("//i[@class='chevron right icon']");
     private By createNewEventText = By.xpath("//div[@class='ui loader']");//XPATH
+    private By dayHeaderValue = By.className("rbc-toolbar-label");
 
 
     private By newEventTitleBox = By.name("title");
@@ -79,6 +79,10 @@ public class CalendarPage extends BasePage {
         return calendarBox;
     }
 
+    public By getDayHeaderValue() {
+        return dayHeaderValue;
+    }
+
     //-----------------------------------------------------Methods------------------------------------------------------//
 
     public void navigateToCalendarPage() {
@@ -87,9 +91,15 @@ public class CalendarPage extends BasePage {
         loginPage.clickOnCalendarMenu();
     }
 
-    public void clickOnWeek() {
+    public void clickOnWeek(){
         clickOnElement(weekButton);
+    }
+    public void clickOnSave() {
+        clickOnElement(saveNewEventButton);
+    }
 
+    public void clickOnOkinAlert() {
+        clickOnElement(alertOk);
     }
 
     public void clickOnPreviousButton() {
@@ -109,15 +119,6 @@ public class CalendarPage extends BasePage {
 
     public void clickOnDay() {
         clickOnElement(dayButton);
-
-    }
-
-    public void clickOnSave() {
-        clickOnElement(saveNewEventButton);
-    }
-
-    public void clickOnOkinAlert() {
-        clickOnElement(alertOk);
     }
 
     public String getErrorText() {
@@ -129,6 +130,10 @@ public class CalendarPage extends BasePage {
         driver.findElement(calendarBoxValue).sendKeys(Keys.ENTER);
     }
 
+    public String getDisplayedDayValue(){
+        return getTextOfElement(dayHeaderValue);
+    }
+
     public void selectCategory(String value){
         clickOnElement(categoryBox);
         List<WebElement> dropdown = driver.findElements(categoryBoxDropDownOptions);
@@ -138,7 +143,6 @@ public class CalendarPage extends BasePage {
             }
         }
     }
-
 
     public boolean checkMonthYearText() {
         waitForElementPresent(weeklyViewTextDisplayDateRange);
@@ -158,7 +162,6 @@ public class CalendarPage extends BasePage {
             return false;
         }
     }
-
 
     public String getDayFromDate(String date) {
         String fullDate = date;
@@ -230,12 +233,18 @@ public class CalendarPage extends BasePage {
         }
     }
 
-
     public String weekRangeTextDisplayed() {
         String Actual = driver.findElement(weeklyViewTextDisplayDateRange).getText().trim();
         System.out.println("Displayed week range is : " + Actual);
         return Actual;
     }
 
+    public String todaysDayValueExpected(){
+        String firstValue = "00" + getDayFromDate(getSystemDate());
+        String abreviatedMonth = MonthHashMap().get(getMonthFromDate(getSystemDate())).toString().substring(0,3);
+        String day = getDayFromDate(getSystemDate());
+        return firstValue+" "+abreviatedMonth+" "+day;
+
+    }
 
 }

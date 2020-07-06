@@ -24,10 +24,8 @@ public class BasePage {
 
     private static final int TIMEOUT = 5;
     private static final int POLLING = 100;
-
     protected WebDriver driver;
     protected WebDriverWait wait;
-
 
     //constructor
     public BasePage(WebDriver driver) {
@@ -36,21 +34,18 @@ public class BasePage {
         PageFactory.initElements(new AjaxElementLocatorFactory(driver, TIMEOUT), this);
     }
 
-
     //---------------------------------Common Functions using By Locator for each page--------------------------------------------------/
 
     public WebDriver getDriver() {
         return this.driver;
     }
 
-    public void switchToiframe(int index) {
+    public void switchToiFrame(int index) {
         driver.switchTo().frame(index);
     }
-    public void allFrames(){
+    public void getAllFramesById(){
     List<WebElement> frames = driver.findElements(By.tagName("iframe"));
-
     System.out.println(frames.size());
-
     for(WebElement fr: frames){
         System.out.println(fr.getAttribute("id"));
     }
@@ -70,8 +65,6 @@ public class BasePage {
 
     public void clickOnElement(By locator) {
         driver.findElement(locator).click();
-
-
     }
 
     public void enterTextInField(By locator, String text) {
@@ -101,7 +94,6 @@ public class BasePage {
         }
     }
 
-
     public String getTextOfElement(By locator) {
         try {
             return driver.findElement(locator).getText();
@@ -109,7 +101,6 @@ public class BasePage {
             System.out.println("Couldnt find Element while using getTextOfElement()");
             e.printStackTrace();
             return null;
-
         }
     }
 
@@ -132,7 +123,6 @@ public class BasePage {
         }
     }
 
-
     public ArrayList<String> getlist(By locator) {
         List<WebElement> list = getDriver().findElements(locator);
         ArrayList<String> linkList = new ArrayList<String>() {
@@ -151,7 +141,6 @@ public class BasePage {
         Format df = new SimpleDateFormat("MM/dd/yyyy");
         String date = df.format(c.getTime());
         return date;
-
     }
 
 

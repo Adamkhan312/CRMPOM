@@ -22,9 +22,6 @@ public class DashboardPage extends BasePage {
        this.excel = new Xls_Reader((System.getProperty("user.dir")+"/src/test/resources/TestData/CrmAppTestData.xlsx"));
     }
 
-
-
-
     //---------------------------------------------------Locators via By------------------------------------------------//
     private By userName = By.cssSelector("span.user-display");
     //SideBar
@@ -37,8 +34,6 @@ public class DashboardPage extends BasePage {
     private By upcomingCallsContentCard= By.xpath("//span[contains(text(),'Upcoming calls')]");
     private By twitterContentCard = By.xpath(" //div[contains(text(),'Twitter')]");
     private By exchangeRatesContentCard = By.xpath("//div[contains(text(),'Exchange Rates')]");
-
-
 
 
     //---------------------------------------------------Getters for By-------------------------------------------------//

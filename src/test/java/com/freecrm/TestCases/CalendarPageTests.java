@@ -16,20 +16,16 @@ public class CalendarPageTests extends BaseTest {
 
     @Test
     public void monthYearDisplayedTest(){
-        CalendarPage calendarPage = new CalendarPage(driver);
-        //login functionality is embodied into this function
-        calendarPage.navigateToCalendarPage();
-        //verify if the default text of calender month and year is correct
+        CalendarPage calendarPage = new CalendarPage(driver);//login functionality is embodied into this function
+        calendarPage.navigateToCalendarPage();//verify if the default text of calender month and year is correct
         Assert.assertTrue(calendarPage.checkMonthYearText());
     }
 
     @Test
     public void clickWeekTest(){
         CalendarPage calendarPage = new CalendarPage(driver);
-        //login functionality is embodied into this function
-        calendarPage.navigateToCalendarPage();
-        //click On Week button
-        calendarPage.clickOnWeek();
+        calendarPage.navigateToCalendarPage(); //login functionality is embodied into this function
+        calendarPage.clickOnWeek();//click On Week button
         //Check that the displayed week range is equal to expected week Range
         Assert.assertEquals(calendarPage.weekRangeTextDisplayed(),calendarPage.customExpectedDateRange(0));
 
@@ -49,12 +45,18 @@ public class CalendarPageTests extends BaseTest {
     }
 
     @Test
+    public void checkDayValueIsDisplayedCorrectlyTest(){
+        CalendarPage calendarPage = new CalendarPage(driver);
+        calendarPage.navigateToCalendarPage(); //login functionality is embodied into this function
+        calendarPage.clickOnDay();
+        Assert.assertEquals(calendarPage.getDisplayedDayValue(),calendarPage.todaysDayValueExpected());
+    }
+
+    @Test
     public void verifyNavigatingThroughWeeksTest(){
         CalendarPage calendarPage = new CalendarPage(driver);
-        //login functionality is embodied into this function
-        calendarPage.navigateToCalendarPage();
-        //click On Week button
-        calendarPage.clickOnWeek();
+        calendarPage.navigateToCalendarPage();//login functionality is embodied into this function
+        calendarPage.clickOnWeek(); //click On Week button
         Assert.assertEquals(calendarPage.weekRangeTextDisplayed(),calendarPage.customExpectedDateRange(0));
         calendarPage.clickOnPreviousButton();
         //Navigating through the weeks and verifying that the Week Range is correct
@@ -72,39 +74,29 @@ public class CalendarPageTests extends BaseTest {
     @Test
     public void saveNewEventWithoutRequiredFields() throws InterruptedException {
         CalendarPage calendarPage = new CalendarPage(driver);
-        //login functionality is embodied into this function
-        calendarPage.navigateToCalendarPage();
+        calendarPage.navigateToCalendarPage();//login functionality is embodied into this function
         calendarPage.waitForElementPresent(calendarPage.getNewAgendaButton());
         calendarPage.clickOnNewAgendaButton();
-        //TODO NEED TO FIX WHY PAGE IS LOADING BLANK
-        calendarPage.getUrlAndGo();
+        calendarPage.getUrlAndGo();//TODO NEED TO FIX WHY PAGE IS LOADING BLANK
         calendarPage.clickOnSave();
         Assert.assertEquals(calendarPage.getErrorText(),"Error");
         calendarPage.clickOnOkinAlert();
 
     }
 
-    @Test(dataProvider = "Data", dataProviderClass = DataProviders.class)
+    @Test(dataProvider = "Data", dataProviderClass = DataProviders.class,enabled = false)
     public void NewEvent(Hashtable<String,String> data) throws InterruptedException {
         CalendarPage calendarPage = new CalendarPage(driver);
-        //login functionality is embodied into this function
-        calendarPage.navigateToCalendarPage();
+        calendarPage.navigateToCalendarPage();//login functionality is embodied into this function
         calendarPage.waitForElementPresent(calendarPage.getNewAgendaButton());
         calendarPage.clickOnNewAgendaButton();
-        //TODO NEED TO FIX WHY PAGE IS LOADING BLANK
-        calendarPage.getUrlAndGo();
+        calendarPage.getUrlAndGo();//TODO NEED TO FIX WHY PAGE IS LOADING BLANK
         calendarPage.waitForElementPresent(calendarPage.getNewEventTitleBox());
-        //Enter value on Title
-        calendarPage.enterTextInField(calendarPage.getNewEventTitleBox(),data.get("Title"));
-        //Click On Calendar Box
-        calendarPage.clickOnElement(calendarPage.getCalendarBox());
-       //Select category
-        calendarPage.selectCategory(data.get("Category"));
-        Thread.sleep(5000);
-        //fill in description
-        calendarPage.enterTextInField(calendarPage.getDescriptionBox(),data.get("Description"));
-        //Save
-       calendarPage.clickOnSave();
+        calendarPage.enterTextInField(calendarPage.getNewEventTitleBox(),data.get("Title"));//Enter value on Title
+        calendarPage.clickOnElement(calendarPage.getCalendarBox());//Click On Calendar Box and select the calendar
+        calendarPage.selectCategory(data.get("Category"));//Select category
+        calendarPage.enterTextInField(calendarPage.getDescriptionBox(),data.get("Description"));//fill in description
+       calendarPage.clickOnSave(); //Save
     }
 
     @Test(enabled= false)
@@ -112,17 +104,10 @@ public class CalendarPageTests extends BaseTest {
 
     }
 
-
     @Test(enabled = false)
     public void CreateEventAndVerifyDisplayedInAgendaTest(){
 
     }
-
-
-
-
-
-
 
 }
 
