@@ -76,8 +76,8 @@ public class BaseTest {
 
     @AfterMethod
     public void tearDown() {
-       //driver.quit();
-        ExtentManager.createInstance().flush();
+       driver.quit();
+       // ExtentManager.createInstance().flush();
     }
 
     public  WebDriver getDriver() {

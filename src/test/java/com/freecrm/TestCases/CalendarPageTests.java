@@ -14,14 +14,14 @@ import java.util.Hashtable;
 
 public class CalendarPageTests extends BaseTest {
 
-    @Test
+    @Test(enabled= false)
     public void monthYearDisplayedTest(){
         CalendarPage calendarPage = new CalendarPage(driver);//login functionality is embodied into this function
         calendarPage.navigateToCalendarPage();//verify if the default text of calender month and year is correct
         Assert.assertTrue(calendarPage.checkMonthYearText());
     }
 
-    @Test
+    @Test(enabled= false)
     public void clickWeekTest(){
         CalendarPage calendarPage = new CalendarPage(driver);
         calendarPage.navigateToCalendarPage(); //login functionality is embodied into this function
@@ -29,6 +29,13 @@ public class CalendarPageTests extends BaseTest {
         //Check that the displayed week range is equal to expected week Range
         Assert.assertEquals(calendarPage.weekRangeTextDisplayed(),calendarPage.customExpectedDateRange(0));
 
+    }
+
+    @Test
+    public void getCalendarElements(){
+        CalendarPage calendarPage = new CalendarPage(driver);
+        calendarPage.navigateToCalendarPage(); //login functionality is embodied into this function
+        calendarPage.getCalendarInfo();
     }
 
     @Test(enabled = false)
@@ -44,15 +51,29 @@ public class CalendarPageTests extends BaseTest {
 
     }
 
-    @Test
+    @Test(enabled= false)
+    public void navigateThroughDaysTest(){
+        CalendarPage calendarPage = new CalendarPage(driver);
+        calendarPage.navigateToCalendarPage(); //login functionality is embodied into this function
+        calendarPage.clickOnDay();
+        Assert.assertEquals(calendarPage.getDisplayedDayValue(),calendarPage.todaysDayValueExpected(0));
+        calendarPage.clickOnNextButton();
+        Assert.assertEquals(calendarPage.getDisplayedDayValue(),calendarPage.todaysDayValueExpected(1));
+        calendarPage.clickOnPreviousButton();
+        Assert.assertEquals(calendarPage.getDisplayedDayValue(),calendarPage.todaysDayValueExpected(0));
+        calendarPage.clickOnPreviousButton();
+        Assert.assertEquals(calendarPage.getDisplayedDayValue(),calendarPage.todaysDayValueExpected(-1));
+
+    }
+    @Test(enabled= false)
     public void checkDayValueIsDisplayedCorrectlyTest(){
         CalendarPage calendarPage = new CalendarPage(driver);
         calendarPage.navigateToCalendarPage(); //login functionality is embodied into this function
         calendarPage.clickOnDay();
-        Assert.assertEquals(calendarPage.getDisplayedDayValue(),calendarPage.todaysDayValueExpected());
+        Assert.assertEquals(calendarPage.getDisplayedDayValue(),calendarPage.todaysDayValueExpected(0));
     }
 
-    @Test
+    @Test(enabled= false)
     public void verifyNavigatingThroughWeeksTest(){
         CalendarPage calendarPage = new CalendarPage(driver);
         calendarPage.navigateToCalendarPage();//login functionality is embodied into this function
@@ -71,7 +92,7 @@ public class CalendarPageTests extends BaseTest {
         Assert.assertEquals(calendarPage.weekRangeTextDisplayed(),calendarPage.customExpectedDateRange(1));
     }
 
-    @Test
+    @Test(enabled= false)
     public void saveNewEventWithoutRequiredFields() throws InterruptedException {
         CalendarPage calendarPage = new CalendarPage(driver);
         calendarPage.navigateToCalendarPage();//login functionality is embodied into this function
@@ -96,6 +117,9 @@ public class CalendarPageTests extends BaseTest {
         calendarPage.clickOnElement(calendarPage.getCalendarBox());//Click On Calendar Box and select the calendar
         calendarPage.selectCategory(data.get("Category"));//Select category
         calendarPage.enterTextInField(calendarPage.getDescriptionBox(),data.get("Description"));//fill in description
+        calendarPage.clickOnTagsBox();
+        calendarPage.enterTextInField(calendarPage.getTagBoxVisible(),data.get("Tags"));
+        calendarPage.enterTextInField(calendarPage.getLocationBox(),data.get("Location"));
        calendarPage.clickOnSave(); //Save
     }
 

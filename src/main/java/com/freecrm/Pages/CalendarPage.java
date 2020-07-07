@@ -36,8 +36,10 @@ public class CalendarPage extends BasePage {
     //---------------------------------------------------Locators via By------------------------------------------------//
     private By calendarHeader = By.cssSelector("div.ui.header.item.mb5.light-black");
     private By calendarLink = By.xpath("//span[contains(text(),'Calendar')]");
-    private By CalendarTableXPath = By.xpath("//div[@class='rbc-month-view']");
+    private By CalendarTableXPath = By.xpath("//div[@class='rbc-month-view']//a");
+    private By todaysCalendarDate = By.xpath("//div[@class='rbc-day-bg rbc-today']");
 
+    //Date element locators
     private By weeklyViewTextDisplayDateRange = By.xpath("//span[@class='rbc-toolbar-label']");
     private By monthYearTextDisplayed = By.cssSelector("span.rbc-toolbar-label");//CSS
     private By currentDateHighlightedOnCalendar = By.cssSelector("div.rbc-day-bg.rbc-today");//CSS
@@ -49,7 +51,7 @@ public class CalendarPage extends BasePage {
     private By createNewEventText = By.xpath("//div[@class='ui loader']");//XPATH
     private By dayHeaderValue = By.className("rbc-toolbar-label");
 
-
+    //New Event Locators
     private By newEventTitleBox = By.name("title");
     private By saveNewEventButton = By.xpath("//button[@class='ui linkedin button']");
     private By alertOk = By.cssSelector("div.actions > button.ui.red.button");
@@ -59,6 +61,9 @@ public class CalendarPage extends BasePage {
     private By categoryBox = By.name("category");
     private By categoryBoxDropDownOptions = By.xpath("//div[@class='visible menu transition']//div");
     private By descriptionBox = By.name("description");
+    private By tagsBox = By.xpath("//label//div[@class='ui fluid multiple search selection dropdown']");
+    private By tagBoxVisible = By.xpath("//div[@class='ui active visible fluid multiple search selection dropdown']//input[@class='search']");
+    private By LocationBox = By.name("location");
 
 
     //---------------------------------------------------Getters for By-------------------------------------------------//
@@ -79,8 +84,12 @@ public class CalendarPage extends BasePage {
         return calendarBox;
     }
 
-    public By getDayHeaderValue() {
-        return dayHeaderValue;
+    public By getTagBoxVisible() {
+        return tagBoxVisible;
+    }
+
+    public By getLocationBox() {
+        return LocationBox;
     }
 
     //-----------------------------------------------------Methods------------------------------------------------------//
@@ -90,10 +99,12 @@ public class CalendarPage extends BasePage {
         loginPage.doLogin(Constants.email, Constants.password);
         loginPage.clickOnCalendarMenu();
     }
+    //clicks on elements
 
-    public void clickOnWeek(){
+    public void clickOnWeek() {
         clickOnElement(weekButton);
     }
+
     public void clickOnSave() {
         clickOnElement(saveNewEventButton);
     }
@@ -110,6 +121,32 @@ public class CalendarPage extends BasePage {
         clickOnElement(nextButton);
     }
 
+    public void clickOnTagsBox() {
+        clickOnElement(tagsBox);
+    }
+
+
+    public void getCalendarInfo() {
+        List<WebElement> calendarElements = driver.findElements(CalendarTableXPath);
+
+        for (int i = 0; i < calendarElements.size(); i++) {
+            System.out.println(calendarElements.get(i).getText().toString());
+            System.out.println("Element is selected "+ calendarElements.get(i).isSelected());
+            System.out.println("Element is displayed "+ calendarElements.get(i).isDisplayed());
+            System.out.println("Element is enabled "+ calendarElements.get(i).isEnabled());
+           try {
+                String fontWeight = ((JavascriptExecutor) driver)
+                        .executeScript("return window.getComputedStyle(arguments[0],'.rbc-date-cell.rbc-now').getPropertyValue('font-weight');", calendarElements.get(i)).toString();
+                System.out.println("fontWeight is " + fontWeight);
+            } catch (Exception e) {
+                System.out.println("css style does not exist");
+            }
+
+
+        }
+    }
+
+    //New events
     public void clickOnNewAgendaButton() {
         WebElement webElement = driver.findElement(newAgendaButton);
         JavascriptExecutor executor = (JavascriptExecutor) driver;
@@ -130,19 +167,32 @@ public class CalendarPage extends BasePage {
         driver.findElement(calendarBoxValue).sendKeys(Keys.ENTER);
     }
 
-    public String getDisplayedDayValue(){
-        return getTextOfElement(dayHeaderValue);
-    }
-
-    public void selectCategory(String value){
+    public void selectCategory(String value) {
         clickOnElement(categoryBox);
         List<WebElement> dropdown = driver.findElements(categoryBoxDropDownOptions);
-        for(int i=0;i<dropdown.size();i++){
-            if(dropdown.get(i).getText().equals(value)){
+        for (int i = 0; i < dropdown.size(); i++) {
+            if (dropdown.get(i).getText().equals(value)) {
                 dropdown.get(i).click();
             }
         }
     }
+
+    //Date tests
+    public String getDisplayedDayValue() {
+        System.out.println("Day value displayed is " + getTextOfElement(dayHeaderValue));
+        return getTextOfElement(dayHeaderValue);
+    }
+
+    public String todaysDayValueExpected(int dayOffset) {
+        String firstValue = "00" + getDayFromDate(getSystemDate(dayOffset));
+        String abreviatedMonth = MonthHashMap().get(getMonthFromDate(getSystemDate(dayOffset))).toString().substring(0, 3);
+        String day = getDayFromDate(getSystemDate(dayOffset));
+        String finalValue = firstValue + " " + abreviatedMonth + " " + day;
+        System.out.println("Expected day value is " + finalValue);
+        return finalValue;
+
+    }
+
 
     public boolean checkMonthYearText() {
         waitForElementPresent(weeklyViewTextDisplayDateRange);
@@ -163,6 +213,7 @@ public class CalendarPage extends BasePage {
         }
     }
 
+    //Below are methods to figure out custom week ranges and functionality for date tests
     public String getDayFromDate(String date) {
         String fullDate = date;
         String[] tempDate = fullDate.split("/");
@@ -239,12 +290,5 @@ public class CalendarPage extends BasePage {
         return Actual;
     }
 
-    public String todaysDayValueExpected(){
-        String firstValue = "00" + getDayFromDate(getSystemDate());
-        String abreviatedMonth = MonthHashMap().get(getMonthFromDate(getSystemDate())).toString().substring(0,3);
-        String day = getDayFromDate(getSystemDate());
-        return firstValue+" "+abreviatedMonth+" "+day;
-
-    }
 
 }

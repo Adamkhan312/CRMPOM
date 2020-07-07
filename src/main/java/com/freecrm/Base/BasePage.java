@@ -71,6 +71,7 @@ public class BasePage {
         driver.findElement(locator).sendKeys(text);
     }
 
+
     public WebElement getElement(By locator) {
         WebElement element = null;
         try {
@@ -134,13 +135,16 @@ public class BasePage {
     }
 
 
-    public static String getSystemDate() {
+    public static String getSystemDate(int dayOffset) {
         LocalDate currentdate = LocalDate.now();
         Month currentMonth = currentdate.getMonth();
         Calendar c = Calendar.getInstance();
         Format df = new SimpleDateFormat("MM/dd/yyyy");
+        c.add(Calendar.DATE,dayOffset);
         String date = df.format(c.getTime());
         return date;
+
+
     }
 
 
