@@ -12,6 +12,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.openqa.selenium.support.events.WebDriverEventListener;
+import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Parameters;
@@ -30,7 +31,8 @@ public class BaseTest {
     protected static FileInputStream fis = null;
     protected static EventFiringWebDriver e_driver;
     public static WebDriverEventListener eventListener;
-    protected WebDriver driver;
+    // here , we will declare static member for driver. so that we can call this in CustomListeners.
+    protected static WebDriver driver;
     public BasePage page;
 
 

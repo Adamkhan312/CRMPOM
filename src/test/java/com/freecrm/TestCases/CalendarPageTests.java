@@ -32,10 +32,10 @@ public class CalendarPageTests extends BaseTest {
     }
 
     @Test
-    public void getCalendarElements(){
+    public void verifyThatCurrentDateValueIsBoldandOthersAreNotTest(){
         CalendarPage calendarPage = new CalendarPage(driver);
         calendarPage.navigateToCalendarPage(); //login functionality is embodied into this function
-        calendarPage.getCalendarInfo();
+        Assert.assertTrue(calendarPage.checkDateValuesStyle());
     }
 
     @Test(enabled = false)
@@ -46,9 +46,14 @@ public class CalendarPageTests extends BaseTest {
     public void verifyTodayButtonWhenInDayViewTest(){
     }
 
-    @Test(enabled = false)
+    @Test
     public void clickMonthTest(){
-
+        CalendarPage calendarPage = new CalendarPage(driver);
+        calendarPage.navigateToCalendarPage(); //login functionality is embodied into this function
+        calendarPage.clickOnDay();
+        Assert.assertEquals(calendarPage.getDisplayedDayValue(),calendarPage.todaysDayValueExpected(0));
+        calendarPage.clickOnMonthButton();
+        Assert.assertTrue(calendarPage.checkMonthYearText());
     }
 
     @Test(enabled= false)

@@ -44,6 +44,7 @@ public class CalendarPage extends BasePage {
     private By monthYearTextDisplayed = By.cssSelector("span.rbc-toolbar-label");//CSS
     private By currentDateHighlightedOnCalendar = By.cssSelector("div.rbc-day-bg.rbc-today");//CSS
     private By weekButton = By.xpath("//span[contains(text(),'Week')]");//XPATH
+    private By monthButton = By.xpath("//span[contains(text(),'Month')]");
     private By newAgendaButton = By.xpath("//button[@class='ui linkedin button']");
     private By dayButton = By.xpath("//span[contains(text(),'Day')]");
     private By previousButton = By.xpath(" //i[@class='chevron left icon']");
@@ -121,29 +122,53 @@ public class CalendarPage extends BasePage {
         clickOnElement(nextButton);
     }
 
+    public void clickOnMonthButton(){
+        clickOnElement(monthButton);
+    }
     public void clickOnTagsBox() {
         clickOnElement(tagsBox);
     }
 
 
-    public void getCalendarInfo() {
+    public boolean checkDateValuesStyle() {
         List<WebElement> calendarElements = driver.findElements(CalendarTableXPath);
+        boolean currentDayMatch = false;
+        int falseCount = 0;
+        boolean finalResult = false;
+        String dayValue, fontWeight;
+        try {
 
-        for (int i = 0; i < calendarElements.size(); i++) {
-            System.out.println(calendarElements.get(i).getText().toString());
-            System.out.println("Element is selected "+ calendarElements.get(i).isSelected());
-            System.out.println("Element is displayed "+ calendarElements.get(i).isDisplayed());
-            System.out.println("Element is enabled "+ calendarElements.get(i).isEnabled());
-           try {
-                String fontWeight = ((JavascriptExecutor) driver)
+            for (int i = 0; i < calendarElements.size(); i++) {
+                dayValue = calendarElements.get(i).getText();
+                System.out.println("checking the date of " + dayValue);
+                fontWeight = ((JavascriptExecutor) driver)
                         .executeScript("return window.getComputedStyle(arguments[0],'.rbc-date-cell.rbc-now').getPropertyValue('font-weight');", calendarElements.get(i)).toString();
                 System.out.println("fontWeight is " + fontWeight);
-            } catch (Exception e) {
-                System.out.println("css style does not exist");
+
+                if (dayValue.equals(getDayFromDate(getSystemDate(0)))) {
+                    if (fontWeight.equals(Constants.todaysFontWeight)) {
+                        currentDayMatch = true;
+                    } else {
+                        currentDayMatch = false;
+                    }
+                } else if (!dayValue.equals(getDayFromDate(getSystemDate(0)))) {
+                    if (fontWeight.equals(Constants.fontWeight)) {
+                    } else {
+                        falseCount++;
+                    }
+                }
+                if ((currentDayMatch) && (falseCount == 0)) {
+                    finalResult = true;
+                } else if ((!currentDayMatch) && (falseCount == 0)) {
+                    finalResult = false;
+                } else if ((currentDayMatch) && (falseCount > 0)) {
+                    finalResult = false;
+                }
             }
-
-
+        } catch (Exception e) {
+            System.out.println("css style does not exist");
         }
+        return finalResult;
     }
 
     //New events

@@ -143,8 +143,30 @@ public class BasePage {
         c.add(Calendar.DATE,dayOffset);
         String date = df.format(c.getTime());
         return date;
+    }
+    public String takeScreenshot(WebDriver driver, String methodName) {
+        String fileName = getScreenshotName(methodName);
+        String directory = System.getProperty("user.dir") + "/screenshots/";
+        (new File(directory)).mkdirs();
+        String path = directory + fileName;
 
+        try {
+            File screenshot = (File)((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
+            FileUtils.copyFile(screenshot, new File(path));
+            System.out.println("*****************");
+            System.out.println("Screenshot stored at:" + path);
+            System.out.println("******************");
+        } catch (Exception var7) {
+            var7.printStackTrace();
+        }
 
+        return path;
+    }
+
+    public static String getScreenshotName(String methodName) {
+        Date d = new Date();
+        String fileName = methodName + "_" + d.toString().replace(":", "_").replace(" ", "_") + ".png";
+        return fileName;
     }
 
 
