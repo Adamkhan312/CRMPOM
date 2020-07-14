@@ -1,10 +1,13 @@
 package com.freecrm.TestCases;
 
+import com.freecrm.Config.Constants;
+import com.freecrm.Pages.ContactsPage;
+import com.freecrm.TestBase.BaseTest;
 import org.testng.annotations.Test;
 
-public class ContactPageTests {
+public class ContactPageTests extends BaseTest {
 
-    @Test
+    @Test(enabled = false)
     public void createNewContactTests(){
 
     }
@@ -12,37 +15,40 @@ public class ContactPageTests {
 
     @Test
     public void verifyColumnHeadersTest(){
-
+        ContactsPage contactsPage = new ContactsPage(driver);
+        contactsPage.navigateToContactsPage();
+        contactsPage.getColumnHeaders();
+        contactsPage.verifyColumnHeaders();
     }
 
 
-    @Test
+    @Test(enabled = false)
     public void viewContactTest(){
 
     }
 
-    @Test
+    @Test(enabled = false)
     public void deleteContactTest(){
 
     }
 
-    @Test
+    @Test(enabled = false)
     public void verifyContactNameIsSortableTest(){
 
     }
 
 
-    @Test
+    @Test(enabled = false)
     public void verifyCategoryIsSortableTest(){
 
     }
 
-    @Test
+    @Test(enabled = false)
     public void verifyStatusIsSortableTest(){
 
     }
 
-    @Test
+    @Test(enabled = false)
     public void verifyEmailIsSortableTest(){
 
     }

@@ -27,6 +27,7 @@ public class LoginPage extends BasePage {
     private By invalidLoginMessage = By.xpath("//div[contains(text(),'Something went wrong...')]");
 
     private By calendarSideBar= By.xpath("//span[contains(text(),'Calendar')]");
+    private By contactsSideBar= By.xpath("//span[contains(text(),'Contacts')]");
 
 
     //---------------------------------------------Getters----------------------------------------------//
@@ -68,6 +69,11 @@ public class LoginPage extends BasePage {
     public CalendarPage clickOnCalendarMenu(){
         clickOnElement(calendarSideBar);
         return new CalendarPage(driver);
+    }
+
+    public ContactsPage clickOnContactsMenu(){
+        clickOnElement(contactsSideBar);
+        return new ContactsPage(driver);
     }
 
     public boolean verifyInvalidLoginMessage() {

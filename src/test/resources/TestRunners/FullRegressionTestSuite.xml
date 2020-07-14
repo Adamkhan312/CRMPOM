@@ -5,21 +5,22 @@
         <listener class-name="com.freecrm.Reporting.CustomListeners"></listener>
     </listeners>
 
-    <test name="Chrome Tests" parallel="tests" thread-count="1" >
+    <test name="Chrome Tests" parallel="tests" thread-count="1">
         <parameter name="browser" value="chrome"></parameter>
         <classes>
 <!--            <class name="com.freecrm.TestCases.LoginPageTests"></class>-->
-            <class name="com.freecrm.TestCases.DashboardPageTests"></class>
+<!--            <class name="com.freecrm.TestCases.DashboardPageTests"></class>-->
 <!--            <class name="com.freecrm.TestCases.CalendarPageTests"></class>-->
+            <class name="com.freecrm.TestCases.ContactPageTests"></class>
         </classes>
     </test>
 
-<!--    <test name="FireFox Tests" parallel="tests" thread-count="1">-->
+<!--    <test name="FireFox Tests" parallel="tests" thread-count="2">-->
 <!--            <parameter name="browser" value="firefox"></parameter>-->
 <!--        <classes>-->
-<!--           <class name="com.freecrm.TestCases.LoginPageTests"></class>
-            <class name="com.freecrm.TestCases.DashboardPageTests"></class>
-<!       </classes>-->
+<!--           <class name="com.freecrm.TestCases.LoginPageTests"></class>-->
+<!--            <class name="com.freecrm.TestCases.DashboardPageTests"></class>-->
+<!--      </classes>-->
 <!--    </test>-->
 
     <!-- Test -->

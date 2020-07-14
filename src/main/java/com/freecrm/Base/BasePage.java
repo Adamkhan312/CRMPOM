@@ -31,7 +31,7 @@ public class BasePage {
     public BasePage(WebDriver driver) {
         this.driver = driver;
         wait = new WebDriverWait(driver, TIMEOUT, POLLING);
-        PageFactory.initElements(new AjaxElementLocatorFactory(driver, TIMEOUT), this);
+       // PageFactory.initElements(new AjaxElementLocatorFactory(driver, TIMEOUT), this);
     }
 
     //---------------------------------Common Functions using By Locator for each page--------------------------------------------------/
@@ -126,13 +126,39 @@ public class BasePage {
 
     public ArrayList<String> getlist(By locator) {
         List<WebElement> list = getDriver().findElements(locator);
-        ArrayList<String> linkList = new ArrayList<String>() {
-        };
+        ArrayList<String> linkList = new ArrayList<String>();
         for (int i = 0; i <= list.size() - 1; i++) {
             linkList.add(list.get(i).getText());
+            System.out.println(linkList.get(i).toString());
         }
         return linkList;
     }
+
+    public ArrayList<String> getlistAttributes(By locator) {
+        List<WebElement> list = getDriver().findElements(locator);
+        ArrayList<String> linkList = new ArrayList<String>();
+        for (int i = 0; i <= list.size() - 1; i++) {
+            linkList.add(list.get(i).getAttribute("innerText"));
+            System.out.println(linkList.get(i).toString());
+        }
+        return linkList;
+    }
+
+    //overload getlist method for page factory FindBY web list elements
+    public ArrayList<String> getlist(List<WebElement> element) {
+        ArrayList<String> list = new ArrayList<String>();
+        for (int i = 0; i < element.size(); i++) {
+          list.add(element.get(i).getText());
+            System.out.println(list.get(i));
+        }
+        return list;
+    }
+
+
+
+
+
+
 
 
     public static String getSystemDate(int dayOffset) {

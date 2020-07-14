@@ -29,7 +29,6 @@ public class CalendarPage extends BasePage {
     //---------------------------------------------------Constructor----------------------------------------------------//
     public CalendarPage(WebDriver driver) {
         super(driver);
-
         this.excel = new Xls_Reader((System.getProperty("user.dir") + "/src/test/resources/TestData/CrmAppTestData.xlsx"));
     }
 
