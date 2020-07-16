@@ -17,6 +17,8 @@ public class LoginPage extends BasePage {
 
     //--------------------------------------Locators via By -------------------------------------//
 
+    //For this page object we wont use Page Factory...regular By locators
+
     private By emailLocator = By.name("email");
     private By passwordBoxLocator = By.name("password");
     private By loginBtnLocator = By.xpath("//div[@id='ui']//div[text()='Login']");
@@ -98,9 +100,5 @@ public class LoginPage extends BasePage {
             return present;
         }
     }
-
-
-    //click on Forgot password
-
 
 }

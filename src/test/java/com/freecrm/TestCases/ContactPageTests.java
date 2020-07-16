@@ -22,6 +22,7 @@ public class ContactPageTests extends BaseTest {
         ContactsPage contactsPage = new ContactsPage(driver);
         contactsPage.navigateToContactsPage();
         contactsPage.getValuesOfHeaders();
+        contactsPage.verifyColumnHeaders();
         //Assert.assertTrue(contactsPage.verifyColumnHeaders(data.get("ContactHeader")));
     }
 

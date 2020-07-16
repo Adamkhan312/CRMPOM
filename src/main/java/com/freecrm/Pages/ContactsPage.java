@@ -16,19 +16,18 @@ import java.util.List;
 
 public class ContactsPage extends BasePage {
 
-    Xls_Reader excel;
-    int value = 0;
 
-    //---------------------------------------------------Constructor----------------------------------------------------//
+
+    //---------------------------------------------------Constructor using Page Factory Init----------------------------------------------------//
+
     public ContactsPage(WebDriver driver) {
         super(driver);
         //set up framework to call Page Factory init on Base Page (super) or i can use below For specific page
         PageFactory.initElements(driver, this);
-        this.excel = new Xls_Reader((System.getProperty("user.dir") + "/src/test/resources/TestData/CrmAppTestData.xlsx"));
+       // this.excel = new Xls_Reader((System.getProperty("user.dir") + "/src/test/resources/TestData/CrmAppTestData.xlsx"));
     }
 
-
-    //---------------------------------------------------Locators via Find By------------------------------------------------//
+    //---------------------------------------------------Locators via Find By Page Factory------------------------------------------------//
 
     @FindBy(css = ".custom-grid.table-scroll")
     private WebElement table;
@@ -62,6 +61,7 @@ public class ContactsPage extends BasePage {
         NameHeader.click();
     }
 
+
     private int getTotalRowsInTable() {
         wait.until(ExpectedConditions.visibilityOfAllElements(table.findElements(By.tagName("tr"))));
         List<WebElement> totalRows = table.findElements(By.tagName("tr"));
@@ -72,9 +72,8 @@ public class ContactsPage extends BasePage {
     private int getTotalColsInTable() {
         int col = 0;
         try {
-            Thread.sleep(2000);
+            Thread.sleep(1000);
             // List<WebElement> totalCols = contactHeader.findElements(By.tagName("td"));
-            System.out.println("There are " + contactHeader.size() + " cols in the table");
             col = contactHeader.size();
         } catch (Exception e) {
             e.printStackTrace();
@@ -82,34 +81,65 @@ public class ContactsPage extends BasePage {
         return col;
     }
 
-    public void getValuesOfHeaders() {
-        wait.until(ExpectedConditions.numberOfElementsToBe(contactHeaderLocator, getTotalColsInTable()));
-        for (WebElement e : contactHeader) {
-            System.out.println(e.getAttribute("innerText"));
+    public ArrayList<String>  getValuesOfHeaders() {
+        ArrayList<String> headerValues = new ArrayList<>();
+        try {
+            wait.until(ExpectedConditions.numberOfElementsToBe(contactHeaderLocator, getTotalColsInTable()));
+            if(!(getTotalColsInTable()==8)){
+                driver.navigate().refresh();
+            }
+            for (WebElement e : contactHeader) {
+               // System.out.println(e.getAttribute("innerText"));
+                headerValues.add(e.getAttribute("innerText"));
+            }
+        } catch (TimeoutException e) {
+            e.printStackTrace();
         }
+        System.out.println(headerValues.toString());
+        return headerValues;
+
+
     }
 
     public boolean verifyValuesAreSorted() {
         ArrayList<String> names = new ArrayList<>();
+        int value = 1;
         int rowCount = getTotalRowsInTable();
         try {
-            for (int i = 1; i < rowCount; i++) {
-                value = i;
+            if(!(getTotalColsInTable()==8)){
+                driver.navigate().refresh();
+            }
+            while (value <= rowCount) {
                 wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.cssSelector("tr:nth-child(" + value + ") > td:nth-child(2)"))));
                 Thread.sleep(1500);
                 //wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.cssSelector("tr:nth-child(" + value + ") > td:nth-child(2)")));
                 String nameValue = driver.findElement(By.cssSelector("tr:nth-child(" + value + ") > td:nth-child(2)")).getText();
                 System.out.println("Name captured was " + nameValue);
                 names.add(nameValue);
+                value++;
             }
+            value = 1;
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("couldnt find element");
+            System.out.println("couldn't find element");
         }
         System.out.println(names.toString());
         boolean isSorted = Ordering.from(String.CASE_INSENSITIVE_ORDER).isOrdered(names);
         System.out.println("Values are sorted: " + isSorted);
         return isSorted;
+    }
+
+    public void verifyColumnHeaders(){
+        ArrayList<String> list = getValuesOfHeaders();
+        Object[][] data = excel.getData("verifyContactHeaders");
+
+        for(int i =0;i<list.size();i++){
+            if(list.get(i).equals(data[i][0].toString())){
+                System.out.println("column name in app is "+ list.get(i)+ " matches expected column name of "+ data[i][0].toString());
+            }else{
+                System.out.println("column name in app is "+ list.get(i)+ " does NOT matches expected column name of "+ data[i][0].toString());
+            }
+        }
     }
 
 

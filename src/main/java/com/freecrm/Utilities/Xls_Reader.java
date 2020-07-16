@@ -10,7 +10,7 @@ import java.util.Calendar;
 public class Xls_Reader {
 
 
-    public String path;
+    public String path= System.getProperty("user.dir") + "/src/test/resources/TestData/CrmAppTestData.xlsx";
     public FileInputStream fis = null;
     public FileOutputStream fileOut = null;
     private XSSFWorkbook workbook = null;

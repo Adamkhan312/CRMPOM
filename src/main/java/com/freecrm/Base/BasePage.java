@@ -1,5 +1,6 @@
 package com.freecrm.Base;
 
+import com.freecrm.Utilities.Xls_Reader;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.PageFactory;
@@ -26,11 +27,13 @@ public class BasePage {
     private static final int POLLING = 100;
     protected WebDriver driver;
     protected WebDriverWait wait;
+    protected Xls_Reader excel;
 
     //constructor
     public BasePage(WebDriver driver) {
         this.driver = driver;
         wait = new WebDriverWait(driver, TIMEOUT, POLLING);
+        this.excel = new Xls_Reader((System.getProperty("user.dir") + "/src/test/resources/TestData/CrmAppTestData.xlsx"));
        //PageFactory.initElements(new AjaxElementLocatorFactory(driver, TIMEOUT), this);
     }
 
