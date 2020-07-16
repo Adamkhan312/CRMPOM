@@ -11,8 +11,7 @@ import java.util.Hashtable;
 
 
 public class DataProviders {
-    Xls_Reader excel = new Xls_Reader(System.getProperty("user.dir")+"/src/test/resources/TestData/CrmAppTestData.xlsx");
-
+    Xls_Reader excel = new Xls_Reader(System.getProperty("user.dir") + "/src/test/resources/TestData/CrmAppTestData.xlsx");
 
 
     @DataProvider(name = "data-provider")
@@ -22,7 +21,6 @@ public class DataProviders {
         int rows = excel.getRowCount(sheetName);
         int cols = excel.getColumnCount(sheetName);
         Object[][] data = new Object[rows - 1][cols];
-
         for (int rowNum = 2; rowNum <= rows; rowNum++) {
             for (int colNum = 0; colNum < cols; colNum++) {
                 data[rowNum - 2][colNum] = excel.getCellData(sheetName, colNum, rowNum);
@@ -31,7 +29,7 @@ public class DataProviders {
         return data;
     }
 
-    @DataProvider(name="Data")
+    @DataProvider(name = "Data")
     public Object[][] getData2(Method m) {
 
         String sheetName = m.getName();
@@ -39,23 +37,16 @@ public class DataProviders {
         int cols = excel.getColumnCount(sheetName);
 
         Object[][] data = new Object[rows - 1][1];
-
-        Hashtable<String,String> table = null;
-
+        Hashtable<String, String> table = null;
         for (int rowNum = 2; rowNum <= rows; rowNum++) { // 2
-
-            table = new Hashtable<String,String>();
-
+            table = new Hashtable<String, String>();
             for (int colNum = 0; colNum < cols; colNum++) {
-
                 // data[0][0]
                 table.put(excel.getCellData(sheetName, colNum, 1), excel.getCellData(sheetName, colNum, rowNum));
                 data[rowNum - 2][0] = table;
             }
 
         }
-
         return data;
-
     }
 }

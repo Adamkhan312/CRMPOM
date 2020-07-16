@@ -1,7 +1,6 @@
 package com.freecrm.Pages;
 
 
-
 import com.freecrm.Base.BasePage;
 import com.freecrm.Utilities.Xls_Reader;
 import org.openqa.selenium.By;
@@ -19,7 +18,7 @@ public class DashboardPage extends BasePage {
     public DashboardPage(WebDriver driver) {
         super(driver);
         Assert.assertTrue(isElementPresent(userName));
-       this.excel = new Xls_Reader((System.getProperty("user.dir")+"/src/test/resources/TestData/CrmAppTestData.xlsx"));
+        this.excel = new Xls_Reader((System.getProperty("user.dir") + "/src/test/resources/TestData/CrmAppTestData.xlsx"));
     }
 
     //---------------------------------------------------Locators via By------------------------------------------------//
@@ -31,7 +30,7 @@ public class DashboardPage extends BasePage {
     private By contactsContentCard = By.cssSelector("div.content.card-header");
     private By dealsContentCard = By.xpath("//div[@class='three column row']//div[@class='header'][contains(text(),'Deals')]");
     private By callQueueContentCard = By.xpath("//span[@class='header'][contains(text(),'Call Queue')]");
-    private By upcomingCallsContentCard= By.xpath("//span[contains(text(),'Upcoming calls')]");
+    private By upcomingCallsContentCard = By.xpath("//span[contains(text(),'Upcoming calls')]");
     private By twitterContentCard = By.xpath(" //div[contains(text(),'Twitter')]");
     private By exchangeRatesContentCard = By.xpath("//div[contains(text(),'Exchange Rates')]");
 
@@ -81,31 +80,30 @@ public class DashboardPage extends BasePage {
         return present;
     }
 
-    public String getDisplayedUserName(){
-       return  getTextOfElement(userName);
+    public String getDisplayedUserName() {
+        return getTextOfElement(userName);
 
     }
 
-    public boolean verifySideBarOptions(String sheetName){
-       Object [][] data =  excel.getData(sheetName);
+    public boolean verifySideBarOptions(String sheetName) {
+        Object[][] data = excel.getData(sheetName);
         int falseCount = 0;
         ArrayList list = getlist(leftSideBar);
-            for(int i = 0; i <excel.getData(sheetName).length;i++) {
-                    if (list.get(i).equals(data[i][0].toString())) {
-                        System.out.println(list.get(i).toString() + " from webpage is equal to " + data[i][0].toString() + " from excel");
-                    } else if (!list.get(i).equals(excel.getData(sheetName)[i][0].toString())) {
-                        System.out.println(list.get(i).toString() + " from webpage is NOT equal to " + data[i][0].toString() + " from excel");
-                        falseCount++;
-                    }
-                }
+        for (int i = 0; i < excel.getData(sheetName).length; i++) {
+            if (list.get(i).equals(data[i][0].toString())) {
+                System.out.println(list.get(i).toString() + " from webpage is equal to " + data[i][0].toString() + " from excel");
+            } else if (!list.get(i).equals(excel.getData(sheetName)[i][0].toString())) {
+                System.out.println(list.get(i).toString() + " from webpage is NOT equal to " + data[i][0].toString() + " from excel");
+                falseCount++;
+            }
+        }
 
-        if(falseCount>0){
+        if (falseCount > 0) {
             return false;
-        }else{
+        } else {
             return true;
         }
     }
-
 
 
     public boolean checkAndClickUrlsExcel(String value, String Url) throws InterruptedException {

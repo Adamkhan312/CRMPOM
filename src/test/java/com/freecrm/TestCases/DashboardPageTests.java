@@ -57,12 +57,12 @@ public class DashboardPageTests extends BaseTest {
 
     @Test
     public void verifyFreeAccountLinkTest() {
-    //TODO
+        //TODO
     }
 
     @Test
     public void searchFunctionalityTest() {
-    //TODO
+        //TODO
     }
 
 }

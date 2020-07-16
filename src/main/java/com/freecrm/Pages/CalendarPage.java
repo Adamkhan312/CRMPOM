@@ -121,9 +121,10 @@ public class CalendarPage extends BasePage {
         clickOnElement(nextButton);
     }
 
-    public void clickOnMonthButton(){
+    public void clickOnMonthButton() {
         clickOnElement(monthButton);
     }
+
     public void clickOnTagsBox() {
         clickOnElement(tagsBox);
     }

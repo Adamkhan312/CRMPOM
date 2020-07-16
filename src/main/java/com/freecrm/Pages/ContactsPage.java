@@ -43,6 +43,8 @@ public class ContactsPage extends BasePage {
     @FindBy(xpath = "//tr[1]//td[2]")
     private WebElement firstContactName;
 
+    By contactHeaderLocator = By.cssSelector("thead.full-width tr > *");
+
 
     //---------------------------------------------------Getters for By-------------------------------------------------//
 
@@ -65,6 +67,26 @@ public class ContactsPage extends BasePage {
         List<WebElement> totalRows = table.findElements(By.tagName("tr"));
         System.out.println("There are " + totalRows.size() + " rows in the table");
         return totalRows.size();
+    }
+
+    private int getTotalColsInTable() {
+        int col = 0;
+        try {
+            Thread.sleep(2000);
+            // List<WebElement> totalCols = contactHeader.findElements(By.tagName("td"));
+            System.out.println("There are " + contactHeader.size() + " cols in the table");
+            col = contactHeader.size();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return col;
+    }
+
+    public void getValuesOfHeaders() {
+        wait.until(ExpectedConditions.numberOfElementsToBe(contactHeaderLocator, getTotalColsInTable()));
+        for (WebElement e : contactHeader) {
+            System.out.println(e.getAttribute("innerText"));
+        }
     }
 
     public boolean verifyValuesAreSorted() {
@@ -90,65 +112,5 @@ public class ContactsPage extends BasePage {
         return isSorted;
     }
 
-    public ArrayList<String> getColumnHeaders() {
-        ArrayList<String> list = new ArrayList<String>();
-        List<WebElement> headerlist = contactHeader;
-        try {
-            for (int i = 1; i < contactHeader.size(); i++) {
-                list.add(contactHeader.get(i).getAttribute("innerText"));
-            }
-        } catch (Exception e) {
-            System.out.println("couldn't find element");
-            e.printStackTrace();
-        }
-        return list;
-    }
 
-
-    public void verifyColumnHeaders() {
-        wait.until(ExpectedConditions.visibilityOfAllElements(contactHeader));
-        ArrayList<String> col = getColumnHeaders();
-        System.out.println("Size of list is " + col.size());
-        for (int i = 0; i < col.size(); i++) {
-            System.out.println("Header value is " + col.get(i));
-        }
-
-    }
-
-    public boolean verifyColumnHeaders1(String value) {
-        int countsMatched = 0;
-        wait.until(ExpectedConditions.visibilityOfAllElements(contactHeader));
-        ArrayList<String> col = getColumnHeaders();
-        System.out.println("Size of list is " + col.size());
-        for (int i = 0; i < col.size(); i++) {
-            System.out.println("Header value is " + col.get(i));
-            if (value.equals(col.get(i))) {
-                countsMatched++;
-                System.out.println("Value found is " + col.get(i) + " value expected is " + value);
-            } else {
-                countsMatched--;
-                System.out.println("Value found is " + col.get(i) + "Value expected is " + value);
-            }
-
-        }
-        if (countsMatched == 8) {
-            return true;
-        } else {
-            return false;
-        }
-
-    }
-
-    public boolean verifyColumnHeaders(ArrayList<String> list, String value) {
-        wait.until(ExpectedConditions.visibilityOfAllElements(contactHeader));
-//        ArrayList<String> col = getColumnHeaders();
-        list.toString();
-        if (list.contains(value)) {
-            System.out.println("Value expected is " + value);
-            return true;
-        } else {
-            return false;
-        }
-
-    }
 }

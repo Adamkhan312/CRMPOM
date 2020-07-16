@@ -14,14 +14,14 @@ import java.util.Hashtable;
 
 public class CalendarPageTests extends BaseTest {
 
-    @Test(enabled= false)
+    @Test
     public void monthYearDisplayedTest(){
         CalendarPage calendarPage = new CalendarPage(driver);//login functionality is embodied into this function
         calendarPage.navigateToCalendarPage();//verify if the default text of calender month and year is correct
         Assert.assertTrue(calendarPage.checkMonthYearText());
     }
 
-    @Test(enabled= false)
+    @Test
     public void clickWeekTest(){
         CalendarPage calendarPage = new CalendarPage(driver);
         calendarPage.navigateToCalendarPage(); //login functionality is embodied into this function
@@ -56,7 +56,7 @@ public class CalendarPageTests extends BaseTest {
         Assert.assertTrue(calendarPage.checkMonthYearText());
     }
 
-    @Test(enabled= false)
+    @Test
     public void navigateThroughDaysTest(){
         CalendarPage calendarPage = new CalendarPage(driver);
         calendarPage.navigateToCalendarPage(); //login functionality is embodied into this function
@@ -70,7 +70,7 @@ public class CalendarPageTests extends BaseTest {
         Assert.assertEquals(calendarPage.getDisplayedDayValue(),calendarPage.todaysDayValueExpected(-1));
 
     }
-    @Test(enabled= false)
+    @Test
     public void checkDayValueIsDisplayedCorrectlyTest(){
         CalendarPage calendarPage = new CalendarPage(driver);
         calendarPage.navigateToCalendarPage(); //login functionality is embodied into this function
@@ -78,7 +78,7 @@ public class CalendarPageTests extends BaseTest {
         Assert.assertEquals(calendarPage.getDisplayedDayValue(),calendarPage.todaysDayValueExpected(0));
     }
 
-    @Test(enabled= false)
+    @Test
     public void verifyNavigatingThroughWeeksTest(){
         CalendarPage calendarPage = new CalendarPage(driver);
         calendarPage.navigateToCalendarPage();//login functionality is embodied into this function
@@ -97,7 +97,7 @@ public class CalendarPageTests extends BaseTest {
         Assert.assertEquals(calendarPage.weekRangeTextDisplayed(),calendarPage.customExpectedDateRange(1));
     }
 
-    @Test(enabled= false)
+    @Test
     public void saveNewEventWithoutRequiredFields() throws InterruptedException {
         CalendarPage calendarPage = new CalendarPage(driver);
         calendarPage.navigateToCalendarPage();//login functionality is embodied into this function
@@ -110,7 +110,7 @@ public class CalendarPageTests extends BaseTest {
 
     }
 
-    @Test(dataProvider = "Data", dataProviderClass = DataProviders.class,enabled = false)
+    @Test(dataProvider = "Data", dataProviderClass = DataProviders.class)
     public void NewEvent(Hashtable<String,String> data) throws InterruptedException {
         CalendarPage calendarPage = new CalendarPage(driver);
         calendarPage.navigateToCalendarPage();//login functionality is embodied into this function

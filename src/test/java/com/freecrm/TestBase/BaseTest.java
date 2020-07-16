@@ -13,9 +13,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.openqa.selenium.support.events.WebDriverEventListener;
 import org.testng.ITestResult;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Parameters;
+import org.testng.annotations.*;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -34,6 +32,18 @@ public class BaseTest {
     // here , we will declare static member for driver. so that we can call this in CustomListeners.
     protected static WebDriver driver;
     public BasePage page;
+
+
+    //Delete saved reports in Directory before running Suite
+    @BeforeSuite
+    public void clearReports() throws IOException {
+        String filePath = System.getProperty("user.dir")+"/report";
+        //Creating the File object
+        File file = new File(filePath);
+        FileUtils.deleteDirectory(file);
+        System.out.println("Files deleted........");
+    }
+
 
 
     @BeforeMethod
@@ -85,6 +95,12 @@ public class BaseTest {
     public  WebDriver getDriver() {
         return this.driver;
 
+    }
+
+    @AfterSuite
+    public void zipAndSendReport(){
+        //TODO implement zip functionality and email functionality
+        //TODO Copy Reports folder to local folder on system for tracking
     }
 
     public String takeScreenshot(WebDriver driver, String methodName){
