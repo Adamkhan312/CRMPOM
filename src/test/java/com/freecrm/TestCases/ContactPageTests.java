@@ -46,9 +46,15 @@ public class ContactPageTests extends BaseTest {
     public void verifyContactNameIsSortableTest(){
         ContactsPage contactsPage = new ContactsPage(driver);
         contactsPage.navigateToContactsPage();
+        //first click does not sort in app
         contactsPage.clickOnNameHeader();
+        //second click should sort Values
         contactsPage.clickOnNameHeader();
-        contactsPage.compareSort();
+       Assert.assertTrue(contactsPage.verifyValuesAreSorted());
+       //third click should desc values so values should not be sorted
+       contactsPage.clickOnNameHeader();
+       Assert.assertFalse(contactsPage.verifyValuesAreSorted());
+
 
 
     }
