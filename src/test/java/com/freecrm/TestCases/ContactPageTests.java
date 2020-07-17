@@ -34,9 +34,13 @@ public class ContactPageTests extends BaseTest {
     }
 
 
-    @Test(enabled = false)
+    @Test
     public void viewContactTest() {
-
+        ContactsPage contactsPage = new ContactsPage(driver);
+        contactsPage.navigateToContactsPage();
+        contactsPage.getFirstNameContact();
+        contactsPage.clickOnViewContactFirstRow();
+        Assert.assertTrue(contactsPage.verifyThatViewedContactIsCorrect());
     }
 
     @Test

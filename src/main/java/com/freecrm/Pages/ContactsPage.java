@@ -16,7 +16,7 @@ import java.util.List;
 
 public class ContactsPage extends BasePage {
 
-    int value;
+    String tempValue;
 
     //---------------------------------------------------Constructor using Page Factory Init----------------------------------------------------//
 
@@ -24,7 +24,7 @@ public class ContactsPage extends BasePage {
         super(driver);
         //set up framework to call Page Factory init on Base Page (super) or i can use below For specific page
         PageFactory.initElements(driver, this);
-       // this.excel = new Xls_Reader((System.getProperty("user.dir") + "/src/test/resources/TestData/CrmAppTestData.xlsx"));
+        // this.excel = new Xls_Reader((System.getProperty("user.dir") + "/src/test/resources/TestData/CrmAppTestData.xlsx"));
     }
 
     //---------------------------------------------------Locators via Find By Page Factory------------------------------------------------//
@@ -36,22 +36,23 @@ public class ContactsPage extends BasePage {
     @FindBy(css = "thead.full-width tr > *")
     private List<WebElement> contactHeader;
 
-    @FindBy(css ="th.collapsing:nth-child(1) div.ui.fitted.checkbox")
+    @FindBy(css = "th.collapsing:nth-child(1) div.ui.fitted.checkbox")
     private WebElement selectAllCheckBox;
 
-    @FindBy(xpath="//div[@class='ui fitted checkbox']//input")
+    @FindBy(xpath = "//div[@class='ui fitted checkbox']//input")
     private WebElement selectAllCheckBoxXpath;
 
     @FindBy(xpath = "//th[contains(text(),'Name')]")
     private WebElement NameHeader;
 
-    @FindBy(xpath = "//tr[1]//td[2]")
+    @FindBy(css = "tbody:nth-child(2) tr:nth-child(1) > td:nth-child(2)")
     private WebElement firstContactName;
 
+    @FindBy(css = "a:nth-child(1) button.ui.icon.button > i.unhide.icon")
+    private WebElement viewContactButton;
+
+
     By contactHeaderLocator = By.cssSelector("thead.full-width tr > *");
-
-
-    //---------------------------------------------------Getters for By-------------------------------------------------//
 
 
     //-----------------------------------------------------Methods------------------------------------------------------//
@@ -67,42 +68,46 @@ public class ContactsPage extends BasePage {
         NameHeader.click();
     }
 
-
-    public void clickOnSelectAllCheckBox(){
-        if(!(getTotalColsInTable()==8)){
+    private void refreshPageIfNotLoaded() {
+        if (!(getTotalColsInTable() == 8)) {
             driver.navigate().refresh();
         }
+    }
+
+    public void clickOnSelectAllCheckBox() {
+        refreshPageIfNotLoaded();
         //TODO use of Thread.sleep is discouraged..need to implement wait condition
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        selectAllCheckBoxXpath.click();
+        selectAllCheckBox.click();
     }
 
-    public boolean verifyAllRowsAreSelected(){
-        int rowCount= getTotalRowsInTable();
-        int countCheck=0;
-        for(int i=0; i<rowCount;i++){
+    public boolean verifyAllRowsAreSelected() {
+        int rowCount = getTotalRowsInTable();
+        int countCheck = 0;
+        for (int i = 0; i < rowCount; i++) {
             //TODO use of Thread.sleep is discouraged..need to implement wait condition
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-           boolean selected = driver.findElement(By.cssSelector("div.ui.checked.fitted.read-only.checkbox")).getAttribute("class").contains("ui checked fitted read-only checkbox");
-            if(selected){
+            boolean selected = driver.findElement(By.cssSelector("div.ui.checked.fitted.read-only.checkbox")).getAttribute("class").contains("ui checked fitted read-only checkbox");
+            if (selected) {
                 countCheck++;
             }
         }
-        if(countCheck==rowCount){
+        if (countCheck == rowCount) {
             return true;
-        }else{
+        } else {
             return false;
         }
 
     }
+
     private int getTotalRowsInTable() {
         wait.until(ExpectedConditions.visibilityOfAllElements(table.findElements(By.tagName("tr"))));
 //      List<WebElement> totalRows = table.findElements(By.tagName("tr"));
@@ -123,15 +128,13 @@ public class ContactsPage extends BasePage {
         return col;
     }
 
-    public ArrayList<String>  getValuesOfHeaders() {
+    public ArrayList<String> getValuesOfHeaders() {
         ArrayList<String> headerValues = new ArrayList<>();
         try {
             wait.until(ExpectedConditions.numberOfElementsToBe(contactHeaderLocator, getTotalColsInTable()));
-            if(!(getTotalColsInTable()==8)){
-                driver.navigate().refresh();
-            }
+            refreshPageIfNotLoaded();
             for (WebElement e : contactHeader) {
-               // System.out.println(e.getAttribute("innerText"));
+                // System.out.println(e.getAttribute("innerText"));
                 headerValues.add(e.getAttribute("innerText"));
             }
         } catch (TimeoutException e) {
@@ -148,7 +151,7 @@ public class ContactsPage extends BasePage {
         int value = 1;
         int rowCount = getTotalRowsInTable();
         try {
-            if(!(getTotalColsInTable()==8)){
+            if (!(getTotalColsInTable() == 8)) {
                 driver.navigate().refresh();
             }
             while (value <= rowCount) {
@@ -171,20 +174,44 @@ public class ContactsPage extends BasePage {
         return isSorted;
     }
 
-    public void verifyColumnHeaders(){
+    public void verifyColumnHeaders() {
         ArrayList<String> list = getValuesOfHeaders();
         Object[][] data = excel.getData("verifyContactHeaders");
 
-        for(int i =0;i<list.size();i++){
-            if(list.get(i).equals(data[i][0].toString())){
-                System.out.println("column name in app is "+ list.get(i)+ " matches expected column name of "+ data[i][0].toString());
-            }else{
-                System.out.println("column name in app is "+ list.get(i)+ " does NOT matches expected column name of "+ data[i][0].toString());
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).equals(data[i][0].toString())) {
+                System.out.println("column name in app is " + list.get(i) + " matches expected column name of " + data[i][0].toString());
+            } else {
+                System.out.println("column name in app is " + list.get(i) + " does NOT matches expected column name of " + data[i][0].toString());
             }
         }
     }
 
+    public String getFirstNameContact() {
+        refreshPageIfNotLoaded();
+        //TODO use of Thread.sleep is discouraged..need to implement wait condition
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        tempValue = firstContactName.getText();
+        return tempValue;
+    }
 
+    public void clickOnViewContactFirstRow() {
+        viewContactButton.click();
+    }
+
+    public boolean verifyThatViewedContactIsCorrect() {
+        String ContactName = driver.findElement(By.cssSelector("div.ui.header.item.mb5.light-black:nth-child(1)")).getText();
+        System.out.println(tempValue);
+        if (tempValue.equals(ContactName)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
 
 }
