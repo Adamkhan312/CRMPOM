@@ -16,12 +16,19 @@ Page Object Model approach implemented
 -Cucumber framework also will be implemented to test some pages of the Application to demonstrate BDD implementation
 
 Few other key features of framework design
-:
+
 -Maven project
+
 -log4j for logging
+
 -Extent report for reporting
+
 -Java mail 
+
 -Apache poi for data driven hybrid approach
+
 -TestNG framework
+
 -jenkins to be implemented
+
 -selenium grid setup to be implemented
