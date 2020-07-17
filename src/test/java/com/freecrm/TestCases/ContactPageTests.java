@@ -39,9 +39,14 @@ public class ContactPageTests extends BaseTest {
 
     }
 
-    @Test(enabled = false)
-    public void deleteContactTest() {
-
+    @Test
+    public void selectAllRowsTest() throws InterruptedException {
+        ContactsPage contactsPage = new ContactsPage(driver);
+        contactsPage.navigateToContactsPage();
+        //click on select all checkbox
+        contactsPage.clickOnSelectAllCheckBox();
+        //verify all rows are selected
+        Assert.assertTrue(contactsPage.verifyAllRowsAreSelected());
     }
 
     @Test

@@ -16,7 +16,7 @@ import java.util.List;
 
 public class ContactsPage extends BasePage {
 
-
+    int value;
 
     //---------------------------------------------------Constructor using Page Factory Init----------------------------------------------------//
 
@@ -35,6 +35,12 @@ public class ContactsPage extends BasePage {
     // By contactHeader = By.cssSelector("thead.full-width tr > *");
     @FindBy(css = "thead.full-width tr > *")
     private List<WebElement> contactHeader;
+
+    @FindBy(css ="th.collapsing:nth-child(1) div.ui.fitted.checkbox")
+    private WebElement selectAllCheckBox;
+
+    @FindBy(xpath="//div[@class='ui fitted checkbox']//input")
+    private WebElement selectAllCheckBoxXpath;
 
     @FindBy(xpath = "//th[contains(text(),'Name')]")
     private WebElement NameHeader;
@@ -62,9 +68,45 @@ public class ContactsPage extends BasePage {
     }
 
 
+    public void clickOnSelectAllCheckBox(){
+        if(!(getTotalColsInTable()==8)){
+            driver.navigate().refresh();
+        }
+        //TODO use of Thread.sleep is discouraged..need to implement wait condition
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        selectAllCheckBoxXpath.click();
+    }
+
+    public boolean verifyAllRowsAreSelected(){
+        int rowCount= getTotalRowsInTable();
+        int countCheck=0;
+        for(int i=0; i<rowCount;i++){
+            //TODO use of Thread.sleep is discouraged..need to implement wait condition
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+           boolean selected = driver.findElement(By.cssSelector("div.ui.checked.fitted.read-only.checkbox")).getAttribute("class").contains("ui checked fitted read-only checkbox");
+            if(selected){
+                countCheck++;
+            }
+        }
+        if(countCheck==rowCount){
+            return true;
+        }else{
+            return false;
+        }
+
+    }
     private int getTotalRowsInTable() {
         wait.until(ExpectedConditions.visibilityOfAllElements(table.findElements(By.tagName("tr"))));
-        List<WebElement> totalRows = table.findElements(By.tagName("tr"));
+//      List<WebElement> totalRows = table.findElements(By.tagName("tr"));
+        List<WebElement> totalRows = driver.findElements(By.cssSelector("div.ui.fitted.read-only.checkbox > label:nth-child(2)"));
         System.out.println("There are " + totalRows.size() + " rows in the table");
         return totalRows.size();
     }
@@ -141,6 +183,8 @@ public class ContactsPage extends BasePage {
             }
         }
     }
+
+
 
 
 }
