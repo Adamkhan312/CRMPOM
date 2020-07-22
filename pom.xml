@@ -12,6 +12,7 @@
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
+        <aspectj.version>1.8.10</aspectj.version>
 
     </properties>
 
@@ -111,9 +112,7 @@
             <artifactId>openxml4j</artifactId>
             <version>1.0-beta</version>
         </dependency>
-
-
-
+        
         <!--Extent Report-->
 
         <!-- https://mvnrepository.com/artifact/com.aventstack/extentreports -->
@@ -163,8 +162,6 @@
             <artifactId>commons-io</artifactId>
             <version>2.6</version>
         </dependency>
-
-
     </dependencies>
 
 
@@ -191,6 +188,7 @@
         <suiteXmlFiles>src/test/resources/TestRunners/FullRegressionTestSuite.xml</suiteXmlFiles>
                     </suiteXmlFiles>
                 </configuration>
+
             </plugin>
 
         </plugins>

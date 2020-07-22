@@ -5,5 +5,13 @@ import org.apache.commons.mail.SimpleEmail;
 
 public class JavaMail {
 
+public void zipFolder(){
+
+}
+
+public void zipFile(){
+    byte[] buffer = new byte[1024];
+
+}
 
 }
