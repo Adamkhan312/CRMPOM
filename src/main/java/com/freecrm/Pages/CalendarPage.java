@@ -3,20 +3,17 @@ package com.freecrm.Pages;
 import com.freecrm.Base.BasePage;
 import com.freecrm.Config.Constants;
 import com.freecrm.Utilities.Xls_Reader;
-import com.sun.xml.internal.rngom.parse.host.Base;
-import org.apache.commons.lang3.text.WordUtils;
+
 import org.openqa.selenium.*;
-import org.openqa.selenium.support.ui.Wait;
-import org.testng.Assert;
+
 
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Month;
-import java.time.YearMonth;
-import java.time.format.DateTimeFormatter;
+
 import java.util.*;
-import java.util.function.Predicate;
+
 
 public class CalendarPage extends BasePage {
 
@@ -303,7 +300,7 @@ public class CalendarPage extends BasePage {
         } else {
             String firstDate = monthHash.get(getMonthFromDate(sundayDate)).toString() + " " + getDayFromDate(sundayDate);
             String secondDate = getDayFromDate(saturdayDate);
-            String finalDateRange = firstDate + " – " + secondDate;
+            String finalDateRange = firstDate + " - " + secondDate;
             System.out.println("Expected Week Range is " + finalDateRange);
             return finalDateRange;
         }
