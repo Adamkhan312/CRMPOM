@@ -8,7 +8,9 @@ import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.openqa.selenium.support.events.WebDriverEventListener;
 import org.testng.annotations.*;
@@ -65,8 +67,15 @@ public class BaseTest {
         } else if (browser.equals("chrome")) {
 
             WebDriverManager.chromedriver().setup();
-            driver = new ChromeDriver();
+            ChromeOptions option = new ChromeOptions();
+            option.setHeadless(true);
+            //options.addArguments("headless");
+            driver = new ChromeDriver(option);
+
+        }else if (browser.equals("html")){
+            driver = new HtmlUnitDriver();
         }
+
 
         //EventFiringWebDriver Register
         e_driver = new EventFiringWebDriver(driver);
