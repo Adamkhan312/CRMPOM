@@ -66,10 +66,11 @@ public class BaseTest {
             driver = new FirefoxDriver();
         } else if (browser.equals("chrome")) {
 
-            WebDriverManager.chromedriver().setup();
+           // WebDriverManager.chromedriver().setup();
             ChromeOptions option = new ChromeOptions();
             option.setHeadless(true);
             //options.addArguments("headless");
+            System.setProperty("webdriver.chrome.driver","/usr/bin/chromedriver");
             driver = new ChromeDriver(option);
 
         }else if (browser.equals("html")){
