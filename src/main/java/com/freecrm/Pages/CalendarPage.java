@@ -297,7 +297,7 @@ public class CalendarPage extends BasePage {
         if (Integer.parseInt(getDayFromDate(sundayDate)) > 27) {
             String firstDate = monthHash.get(getMonthFromDate(sundayDate)).toString() + " " + getDayFromDate(sundayDate);
             String secondDate = monthHash.get(getMonthFromDate(saturdayDate)).toString() + " " + getDayFromDate(saturdayDate);
-            String finalDateRange = firstDate + " – " + secondDate;
+            String finalDateRange = firstDate + " - " + secondDate;
             System.out.println("Expected Week Range is " + finalDateRange);
             return finalDateRange;
         } else {
