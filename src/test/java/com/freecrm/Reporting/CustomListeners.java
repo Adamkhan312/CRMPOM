@@ -7,7 +7,6 @@ import com.aventstack.extentreports.Status;
 import com.aventstack.extentreports.markuputils.ExtentColor;
 import com.aventstack.extentreports.markuputils.Markup;
 import com.aventstack.extentreports.markuputils.MarkupHelper;
-
 import com.freecrm.TestBase.BaseTest;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;

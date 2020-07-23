@@ -1,6 +1,5 @@
 package com.freecrm.TestCases;
 
-import com.freecrm.Config.Constants;
 import com.freecrm.Pages.ContactsPage;
 import com.freecrm.TestBase.BaseTest;
 import com.freecrm.Utilities.DataProviders;

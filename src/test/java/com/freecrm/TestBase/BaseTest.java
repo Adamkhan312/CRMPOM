@@ -1,7 +1,6 @@
 package com.freecrm.TestBase;
 
 import com.freecrm.Base.BasePage;
-import com.freecrm.Reporting.ExtentManager;
 import com.freecrm.Reporting.WebEventListener;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.apache.commons.io.FileUtils;
@@ -12,7 +11,6 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.openqa.selenium.support.events.WebDriverEventListener;
-import org.testng.ITestResult;
 import org.testng.annotations.*;
 
 import java.io.File;

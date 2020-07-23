@@ -2,9 +2,9 @@ package com.freecrm.TestCases;
 
 
 import com.freecrm.Pages.DashboardPage;
-import com.freecrm.Utilities.DataProviders;
 import com.freecrm.Pages.LoginPage;
 import com.freecrm.TestBase.BaseTest;
+import com.freecrm.Utilities.DataProviders;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 

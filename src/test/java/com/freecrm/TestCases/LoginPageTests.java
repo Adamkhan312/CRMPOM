@@ -2,7 +2,6 @@ package com.freecrm.TestCases;
 
 import com.freecrm.Pages.LoginPage;
 import com.freecrm.TestBase.BaseTest;
-
 import org.testng.Assert;
 import org.testng.annotations.Test;
 

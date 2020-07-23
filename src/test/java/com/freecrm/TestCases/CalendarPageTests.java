@@ -1,13 +1,9 @@
 package com.freecrm.TestCases;
 
 import com.freecrm.Pages.CalendarPage;
-import com.freecrm.Pages.DashboardPage;
 import com.freecrm.TestBase.BaseTest;
 import com.freecrm.Utilities.DataProviders;
-import com.sun.xml.internal.bind.v2.TODO;
-import org.openqa.selenium.Alert;
 import org.testng.Assert;
-import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 import java.util.Hashtable;
