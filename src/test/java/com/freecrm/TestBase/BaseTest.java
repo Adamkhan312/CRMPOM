@@ -70,7 +70,7 @@ public class BaseTest {
             ChromeOptions option = new ChromeOptions();
             option.setHeadless(true);
             //options.addArguments("headless");
-            System.setProperty("webdriver.chrome.driver","/usr/bin/chromedriver");
+            System.setProperty("webdriver.chrome.driver","/Downloads/chromedriver");
             driver = new ChromeDriver(option);
 
         }else if (browser.equals("html")){
